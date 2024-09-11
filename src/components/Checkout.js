@@ -15,6 +15,11 @@ const Checkout = () => {
     const [zip, setZip] = useState('');
     const [paymentMethod, setPaymentMethod] = useState('Credit Card');
 
+    // Calculate total price
+    const calculateTotalPrice = () => {
+        return cartItems.reduce((total, item) => total + item.price * item.qty, 0).toFixed(2);
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         // Handle form submission here (e.g., dispatch an action, make an API call)
@@ -39,6 +44,9 @@ const Checkout = () => {
                 <div className="cartSummary">
                     <h2>Order Summary</h2>
                     <Minicart cartItems={cartItems} hideText={true} />
+                    <div className="totalPrice">
+                        <h3>Total Price: ${calculateTotalPrice()}</h3>
+                    </div>
                 </div>
 
                 <hr style={{ margin: '20px 0' }}></hr>

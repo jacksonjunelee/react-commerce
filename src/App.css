@@ -1,265 +1,312 @@
-.App {
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  background-color: #333;
+  color: white;
+  padding: 1em;
   text-align: center;
+}
+
+nav {
+  margin: 10px 0;
+  text-align: center;
+}
+
+nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #333;
+}
+
+/* App Component */
+.App {
+text-align: center;
 }
 
 .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+height: 40vmin;
+pointer-events: none;
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+}
 }
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+background-color: #282c34;
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+font-size: calc(10px + 2vmin);
+color: white;
 }
 
 .App-link {
-  color: #61dafb;
+color: #61dafb;
 }
 
 @keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+from {
+  transform: rotate(0deg);
+}
+to {
+  transform: rotate(360deg);
+}
 }
 
-/* Product CSS */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-header {
-    background-color: #333;
-    color: white;
-    padding: 1em;
-    text-align: center;
-}
-nav {
-    margin: 10px 0;
-    text-align: center;
-}
-nav a {
-    margin: 0 15px;
-    text-decoration: none;
-    color: #333;
-}
-/* .container {
-    display: flex;
-    justify-content: space-around;
-    padding: 20px;
-} */
+/* Product Styling */
 .product {
-    border: 1px solid #ccc;
-    padding: 20px;
-    width: 30%;
-    text-align: center;
+border: 1px solid #ccc;
+padding: 20px;
+width: 30%;
+text-align: center;
+box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+margin-bottom: 20px;
+position: relative;
 }
+
 .product img {
-    max-width: 100%;
-    height: auto;
-}
-.cart {
-    padding: 20px;
-    border: 1px solid #ccc;
-}
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
+max-width: 100%;
+height: auto;
 }
 
-/* Side Pan CSS */
-.cartIcon {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  position: relative;
-  padding: 10px;
-  color: #333;
-}
-
-.cartCount {
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  padding: 2px 8px;
-  font-size: 12px;
-  position: absolute;
-  top: -5px;
-  right: -10px;
-  font-weight: bold;
-  min-width: 18px;
-  text-align: center;
-}
-
-
-/* Side Pane CSS */
-.sidePane {
-  position: fixed;
-  right: 0;
-  top: 0;
-  width: 300px;
-  height: 100%;
-  background-color: white;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-  padding: 20px;
-  transform: translateX(100%); /* Keep it off-screen initially */
-  transition: transform 0.3s ease-in-out;
-}
-
-/* When sidePane is open, bring it into view */
-.sidePane.open {
-  transform: translateX(0); /* Slide it into view */
-}
-
-/* Close Button */
-.closeBtn {
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  color: #333;
-  padding: 10px;
-}
-
-.closeBtn:hover {
-  color: red;
-}
-
-
-/* Product Container and List CSS */
-.productContainer {
-  margin-bottom: 2rem;
-  padding: 20px;
-}
-
-.productList {
-  display: flex;
-  justify-content: space-around;
-  padding: 20px;
-  flex-wrap: wrap;
-}
-
-.cartList {
-  display: flex;
-  flex-direction: column;
-  padding: 10px 0;
-}
-
-.cartList .product {
-  margin-bottom: 15px;
-}
-
-/* Product Header */
 .productHeader h1 {
-  display: inline-block;
-  margin-right: 1rem;
-  font-size: 24px;
+display: inline-block;
+margin-right: 1rem;
+font-size: 24px;
 }
 
-/* Cart Item Mini CSS */
+/* Cart and Checkout */
+.cart {
+padding: 20px;
+border: 1px solid #ccc;
+}
+
+.checkoutContainer {
+max-width: 600px;
+margin: 0 auto;
+padding: 20px;
+border: 1px solid #ccc;
+border-radius: 8px;
+background-color: #f9f9f9;
+}
+
+.checkoutContainer h1 {
+text-align: center;
+}
+
+.checkoutContainer .formGroup {
+margin-bottom: 15px;
+}
+
+.checkoutContainer label {
+display: block;
+margin-bottom: 5px;
+}
+
+.checkoutContainer input, 
+.checkoutContainer textarea, 
+.checkoutContainer select {
+width: 100%;
+padding: 8px;
+border: 1px solid #ccc;
+border-radius: 4px;
+padding-right: 0px;
+}
+
+.checkoutContainer textarea {
+resize: vertical;
+height: 100px;
+}
+
+.checkoutContainer button {
+width: 100%;
+padding: 10px;
+background-color: #28a745;
+color: white;
+border: none;
+border-radius: 4px;
+font-size: 16px;
+cursor: pointer;
+}
+
+.checkoutContainer button:hover {
+background-color: #218838;
+}
+
+.checkoutContainer .cartSummary {
+margin-top: 20px;
+}
+
+.checkoutContainer .cartSummary h2 {
+margin-bottom: 10px;
+}
+
+.checkoutContainer .cartSummary ul {
+list-style: none;
+padding: 0;
+}
+
+.checkoutContainer .cartSummary li {
+padding: 5px 0;
+}
+
+.totalPrice {
+text-align: right;
+}
+
+/* Cart Item Mini */
 .cart_item__mini {
-  display: flex;
-  align-items: center;
-  width: 90%;
-  padding: 10px;
-  background-color: #f9f9f9;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-  justify-content: space-around;
+display: flex;
+align-items: center;
+width: 90%;
+padding: 10px;
+background-color: #f9f9f9;
+margin-bottom: 15px;
+border-radius: 5px;
+box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+justify-content: space-around;
 }
 
 .cart_item__mini img {
-  width: 50px;
-  height: 50px;
-  border-radius: 4px;
-  margin-right: 10px;
-  object-fit: cover;
+width: 50px;
+height: 50px;
+border-radius: 4px;
+margin-right: 10px;
+object-fit: cover;
 }
 
 .cart_item__mini h3 {
-  font-size: 16px;
-  margin: 0;
-  /* color: #333; */
+font-size: 16px;
+margin: 0;
 }
 
 .cart_item__mini p {
-  font-size: 14px;
-  color: #666;
-  margin: 0;
+font-size: 14px;
+color: #666;
+margin: 0;
 }
 
-/* Max-width handling for the side pane */
+/* Footer */
+footer {
+background-color: #333;
+color: white;
+text-align: center;
+padding: 10px;
+position: fixed;
+bottom: 0;
+width: 100%;
+}
+
+/* Side Pane */
+.cartIcon {
+background: none;
+border: none;
+font-size: 24px;
+cursor: pointer;
+position: relative;
+padding: 10px;
+color: #333;
+}
+
+.cartCount {
+background-color: red;
+color: white;
+border-radius: 50%;
+padding: 2px 8px;
+font-size: 12px;
+position: absolute;
+top: -5px;
+right: -10px;
+font-weight: bold;
+min-width: 18px;
+text-align: center;
+}
+
+.sidePane {
+position: fixed;
+right: 0;
+top: 0;
+width: 300px;
+height: 100%;
+background-color: white;
+box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+z-index: 1000;
+padding: 20px;
+transform: translateX(100%); /* Keep it off-screen initially */
+transition: transform 0.3s ease-in-out;
+}
+
+.sidePane.open {
+transform: translateX(0); /* Slide it into view */
+}
+
+.closeBtn {
+background: none;
+border: none;
+font-size: 18px;
+cursor: pointer;
+position: absolute;
+top: 10px;
+right: 10px;
+color: #333;
+padding: 10px;
+}
+
+.closeBtn:hover {
+color: red;
+}
+
+/* Product Container and List */
+.productContainer {
+margin-bottom: 2rem;
+padding: 20px;
+}
+
+.productList {
+display: flex;
+justify-content: space-around;
+padding: 20px;
+flex-wrap: wrap;
+}
+
+.cartList {
+display: flex;
+flex-direction: column;
+padding: 10px 0;
+}
+
+.cartList .product {
+margin-bottom: 15px;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .sidePane {
-    width: 100%;
-    height: 100vh;
-  }
-
-  .cart_item__mini {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .cart_item__mini img {
-    width: 60px;
-    height: 60px;
-    margin-bottom: 10px;
-  }
+.sidePane {
+  width: 100%;
+  height: 100vh;
 }
 
-/* Remove button styling */
-/* .removeBtn {
-  background: none;
-  border: none;
-  color: #333;
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 18px;
-  cursor: pointer;
-  padding: 5px;
+.cart_item__mini {
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.removeBtn:hover {
-  color: red;
-} */
-
-/* Ensure the product div has position relative for absolute positioning of the remove button */
-.product {
-  position: relative;
-  border: 1px solid #ccc;
-  padding: 20px;
-  /* width: 30%; */
-  text-align: center;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
+.cart_item__mini img {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 10px;
+}
 }
 
 /* Remove button styling */
@@ -268,8 +315,8 @@ footer {
   border: none;
   color: #333;
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 0px;
+  right: 0px;
   font-size: 18px;
   cursor: pointer;
   padding: 5px;
@@ -278,71 +325,4 @@ footer {
 
 .removeBtn:hover {
   color: red;
-}
-
-.checkoutContainer {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-}
-
-.checkoutContainer h1 {
-  text-align: center;
-}
-
-.checkoutContainer .formGroup {
-  margin-bottom: 15px;
-}
-
-.checkoutContainer label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.checkoutContainer input, .checkoutContainer textarea, .checkoutContainer select {
-  width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding-right: 0px;
-}
-
-.checkoutContainer textarea {
-  resize: vertical;
-  height: 100px;
-}
-
-.checkoutContainer button {
-  width: 100%;
-  padding: 10px;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.checkoutContainer button:hover {
-  background-color: #218838;
-}
-
-.checkoutContainer .cartSummary {
-  margin-top: 20px;
-}
-
-.checkoutContainer .cartSummary h2 {
-  margin-bottom: 10px;
-}
-
-.checkoutContainer .cartSummary ul {
-  list-style: none;
-  padding: 0;
-}
-
-.checkoutContainer .cartSummary li {
-  padding: 5px 0;
 }
