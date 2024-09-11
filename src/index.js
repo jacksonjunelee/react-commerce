@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import store from './state/store';
 import { createBrowserRouter } from 'react-router-dom';
 import { RouterProvider } from 'react-router-dom';
+import Checkout from './components/Checkout';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
   },
+  {
+    path: '/cart',
+    element: <Checkout />
+  }
 ]);
 
 root.render(

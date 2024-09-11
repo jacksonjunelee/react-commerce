@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '../state/actions/cartActions';
 import Minicart from './Minicart';
 import { FaShoppingCart } from 'react-icons/fa';  // Import shopping cart icon from react-icons
+import { Link } from 'react-router-dom';
 
 const ProductContainer = () => {
     const dispatch = useDispatch();
@@ -17,7 +18,7 @@ const ProductContainer = () => {
 
         // setCart((prevCart) => [...prevCart, product]);
         // dispatch action
-        dispatch(addToCart(product.id))
+        dispatch(addToCart(product.id, 1))
     };
 
     const toggleCart = () => {
@@ -39,9 +40,9 @@ const ProductContainer = () => {
             </header>
 
             <nav>
-                <a href="#">Home</a>
-                <a href="#">Products</a>
-                <a href="#">Cart</a>
+            <Link to={`/`}>Home</Link>
+                <Link to={`/`}>Products</Link>
+                <Link to={`/cart`}>Cart</Link>
             </nav>
 
             <div className="container">

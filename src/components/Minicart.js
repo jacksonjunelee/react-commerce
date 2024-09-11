@@ -1,10 +1,10 @@
 import React from "react";
 import { FaTimes } from 'react-icons/fa';
 
-const Minicart = ({ cartItems, onRemoveFromCart }) => {
+const Minicart = ({ cartItems, onRemoveFromCart, hideText }) => {
     return (
         <div className="cartContainer">
-            <h2>Shopping Cart</h2>
+            <h2>{!hideText && 'Shopping Cart'}</h2>
             {
 
                 cartItems.length === 0 && (
@@ -24,11 +24,16 @@ const Minicart = ({ cartItems, onRemoveFromCart }) => {
                             <h2>{product.id}</h2>
                             <h3>{product.title}</h3>
                             <p>${product.price}</p>
+                            <p>{product.qty}</p>
 
                             {/* Remove Button */}
-                            <button className='removeBtn' onClick={() => onRemoveFromCart(product.id)}>
-                                <FaTimes />
-                            </button>
+                            {
+                                onRemoveFromCart && (
+                                    <button className='removeBtn' onClick={() => onRemoveFromCart(product.id)}>
+                                        <FaTimes />
+                                    </button>
+                                )
+                            }
                         </div>
                     ))
                 )

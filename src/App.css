@@ -252,7 +252,6 @@ footer {
 } */
 
 /* Ensure the product div has position relative for absolute positioning of the remove button */
-/* Ensure the product div has position relative for absolute positioning of the remove button */
 .product {
   position: relative;
   border: 1px solid #ccc;
@@ -279,4 +278,71 @@ footer {
 
 .removeBtn:hover {
   color: red;
+}
+
+.checkoutContainer {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.checkoutContainer h1 {
+  text-align: center;
+}
+
+.checkoutContainer .formGroup {
+  margin-bottom: 15px;
+}
+
+.checkoutContainer label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.checkoutContainer input, .checkoutContainer textarea, .checkoutContainer select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding-right: 0px;
+}
+
+.checkoutContainer textarea {
+  resize: vertical;
+  height: 100px;
+}
+
+.checkoutContainer button {
+  width: 100%;
+  padding: 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.checkoutContainer button:hover {
+  background-color: #218838;
+}
+
+.checkoutContainer .cartSummary {
+  margin-top: 20px;
+}
+
+.checkoutContainer .cartSummary h2 {
+  margin-bottom: 10px;
+}
+
+.checkoutContainer .cartSummary ul {
+  list-style: none;
+  padding: 0;
+}
+
+.checkoutContainer .cartSummary li {
+  padding: 5px 0;
 }

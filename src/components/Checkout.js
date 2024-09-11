@@ -1,0 +1,149 @@
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { FaCreditCard } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import Minicart from './Minicart';
+
+const Checkout = () => {
+    const cartItems = useSelector((state) => state.cart.cartItems);
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [address1, setAddress1] = useState('');
+    const [address2, setAddress2] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [zip, setZip] = useState('');
+    const [paymentMethod, setPaymentMethod] = useState('Credit Card');
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        // Handle form submission here (e.g., dispatch an action, make an API call)
+        console.log('Order placed:', {
+            name, email, address1, address2, city, state, zip, paymentMethod, cartItems
+        });
+    };
+
+    return (
+        <>
+            <header className='productHeader'>
+                <h1>React Commerce</h1>
+            </header>
+
+            <nav>
+                <Link to={`/`}>Home</Link>
+                <Link to={`/`}>Products</Link>
+                <Link to={`/cart`}>Cart</Link>
+            </nav>
+
+            <div className="checkoutContainer">
+                <div className="cartSummary">
+                    <h2>Order Summary</h2>
+                    <Minicart cartItems={cartItems} hideText={true} />
+                </div>
+
+                <hr style={{ margin: '20px 0' }}></hr>
+
+                <h1>Checkout</h1>
+                <form onSubmit={handleSubmit}>
+                    <div className="formGroup">
+                        <label htmlFor="name">Name:</label>
+                        <input
+                            type="text"
+                            id="name"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <div className="formGroup">
+                        <label htmlFor="email">Email:</label>
+                        <input
+                            type="email"
+                            id="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <div className="formGroup">
+                        <label htmlFor="address1">Address:</label>
+                        <input
+                            type="text"
+                            id="address1"
+                            value={address1}
+                            onChange={(e) => setAddress1(e.target.value)}
+                            required
+                            placeholder="Street Address"
+                        />
+                    </div>
+
+                    <div className="formGroup">
+                        <label htmlFor="address2">Address 2:</label>
+                        <input
+                            type="text"
+                            id="address2"
+                            value={address2}
+                            onChange={(e) => setAddress2(e.target.value)}
+                            placeholder="Apartment, suite, etc. (optional)"
+                        />
+                    </div>
+
+                    <div className="formGroup">
+                        <label htmlFor="city">City:</label>
+                        <input
+                            type="text"
+                            id="city"
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <div className="formGroup">
+                        <label htmlFor="state">State:</label>
+                        <input
+                            type="text"
+                            id="state"
+                            value={state}
+                            onChange={(e) => setState(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <div className="formGroup">
+                        <label htmlFor="zip">Zip Code:</label>
+                        <input
+                            type="text"
+                            id="zip"
+                            value={zip}
+                            onChange={(e) => setZip(e.target.value)}
+                            required
+                        />
+                    </div>
+
+                    <div className="formGroup">
+                        <label htmlFor="paymentMethod">Payment Method:</label>
+                        <select
+                            id="paymentMethod"
+                            value={paymentMethod}
+                            onChange={(e) => setPaymentMethod(e.target.value)}
+                            required
+                        >
+                            <option value="Credit Card">Credit Card</option>
+                            <option value="PayPal">PayPal</option>
+                            <option value="Bank Transfer">Bank Transfer</option>
+                        </select>
+                    </div>
+
+                    <button type="submit">
+                        <FaCreditCard /> Place Order
+                    </button>
+                </form>
+            </div>
+        </>
+    );
+};
+
+export default Checkout;
