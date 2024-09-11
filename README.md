@@ -1,5 +1,5 @@
 # react-commerce
-A modern ecommerce platform built with React, Redux, and TypeScript on the frontend, and Node.js with Express for a robust and scalable backend API
+A modern ecommerce platform built with React and Redux
 
 # Getting Started with Create React App
 
