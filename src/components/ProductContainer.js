@@ -35,7 +35,7 @@ const ProductContainer = () => {
                 <h1>React Commerce</h1>
                 <button className="cartIcon" onClick={toggleCart}>
                     <FaShoppingCart color="#FFF"/>  {/* Cart Icon */}
-                    <span className="cartCount">{cartItems.length}</span> {/* Display the number of items */}
+                    <span className="cartCount">{cartItems.reduce((acc, val) => acc + val.qty, 0)}</span> {/* Display the number of items */}
                 </button>
             </header>
 
@@ -43,6 +43,7 @@ const ProductContainer = () => {
             <Link to={`/`}>Home</Link>
                 <Link to={`/`}>Products</Link>
                 <Link to={`/cart`}>Cart</Link>
+                <Link to={`/machine-learning`}>Machine Learning</Link>
             </nav>
 
             <div className="container">

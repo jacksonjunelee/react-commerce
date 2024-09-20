@@ -50,3 +50,10 @@ export const removeFromCart = (id) => (dispatch, getState) => {
 
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
 };
+
+// Action creator for clearing the cart
+export const clearCart = () => {
+  return {
+    type: 'CLEAR_CART',
+  };
+};

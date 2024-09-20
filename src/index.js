@@ -8,6 +8,7 @@ import store from './state/store';
 import { createBrowserRouter } from 'react-router-dom';
 import { RouterProvider } from 'react-router-dom';
 import Checkout from './components/Checkout';
+import MachineLearning from './components/MachineLearning';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
   {
     path: '/cart',
     element: <Checkout />
+  },
+  {
+    path: '/machine-learning',
+    element: <MachineLearning />
   }
 ]);
 
