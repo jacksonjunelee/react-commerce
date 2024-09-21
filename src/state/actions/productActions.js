@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { MOCK_DATA } from '../mockData';
 
 export const fetchProducts = () => async (dispatch) => {
   try {
@@ -9,23 +10,7 @@ export const fetchProducts = () => async (dispatch) => {
     const mockApi = new Promise((resolve) => {
       setTimeout(() => {
         resolve({
-          data: [
-            {
-              id: 1,
-              title: 'Sunglasses',
-              price: 19.99
-            },
-            {
-              id: 2,
-              title: 'Sneakers',
-              price: 19.99
-            },
-            {
-              id: 3,
-              title: 'Shirt',
-              price: 19.99
-            },
-          ]
+          data: MOCK_DATA
         });
       }, 1000)
     })

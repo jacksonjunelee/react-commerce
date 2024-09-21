@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { recordSale } from "../state/actions/salesActions";
 import { clearCart } from "../state/actions/cartActions";
 
-const Minicart = ({ cartItems, onRemoveFromCart, hideText }) => {
+const Minicart = ({ cartItems, onRemoveFromCart, hideText, hideButton }) => {
   const dispatch = useDispatch();
   const handleBuyNow = () => {
     const totalPrice = cartItems.reduce(
@@ -35,7 +35,7 @@ const Minicart = ({ cartItems, onRemoveFromCart, hideText }) => {
         cartItems.map((product) => (
           <div className="product cart_item__mini" key={product.id}>
             <img
-              src="https://via.placeholder.com/150"
+              src={product.img}
               alt={`Product ${product.id}`}
             />
             <h2>{product.id}</h2>
@@ -55,20 +55,22 @@ const Minicart = ({ cartItems, onRemoveFromCart, hideText }) => {
           </div>
         ))}
 
-      <button
-        style={{
-          backgroundColor: "green",
-          color: "white",
-          padding: "10px 15px",
-          marginLeft: "10px",
-          border: "none",
-          cursor: "pointer",
-          borderRadius: "5px",
-        }}
-        onClick={() => handleBuyNow()}
-      >
-        Buy Now (for ML purposes only)
-      </button>
+        {
+            !hideButton &&       <button
+            style={{
+              backgroundColor: "green",
+              color: "white",
+              padding: "10px 15px",
+              marginLeft: "10px",
+              border: "none",
+              cursor: "pointer",
+              borderRadius: "5px",
+            }}
+            onClick={() => handleBuyNow()}
+          >
+            Buy Now (for ML purposes only)
+          </button> 
+        }
     </div>
   );
 };

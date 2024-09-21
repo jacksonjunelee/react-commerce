@@ -66,13 +66,13 @@ const SalesForecasting = () => {
 
   return (
     <div>
-      <div>
+      <div className="forecasting-container">
         <h1>Sales Forecasting</h1>
-        <button onClick={simulateSalesForecasting}>
+        <button className="forecast-button" onClick={simulateSalesForecasting}>
           Predict Next Month's Sales
         </button>
         {prediction !== null && (
-        <p>
+        <p className="forecast-result">
           {typeof prediction === "string"
             ? prediction
             : `Predicted Sales for Next Month: $${prediction.toFixed(2)}`}

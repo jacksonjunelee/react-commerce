@@ -21,7 +21,7 @@ const ProductList = ({ onAddToCart }) => {
         <div className="productList">
           {products.map((product) => (
             <div className='product' key={product.id}>
-              <img src="https://via.placeholder.com/150" alt={`Product ${product.id}`} />
+              <img src={product.img} alt={`Product ${product.id}`} />
               <h2>{ product.id }</h2>
               <h3>{ product.title }</h3>
               <p>${ product.price }</p>
