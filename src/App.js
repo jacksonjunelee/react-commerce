@@ -12,7 +12,7 @@ function App() {
       <ProductContainer />
 
       <footer>
-        <p>&copy; 2024 My E-Commerce Store</p>
+        <p>&copy; 2024 React E-Commerce Store</p>
        </footer>
     </div>
   );
