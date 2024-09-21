@@ -328,7 +328,7 @@ margin-bottom: 15px;
 }
 
 
-.forecasting-container {
+.forecasting-container, .recommendation-container {
   max-width: 70%;
   margin: 20px auto;
   padding: 20px;
@@ -340,7 +340,7 @@ margin-bottom: 15px;
   padding-bottom: 80px;
 }
 
-.forecast-button {
+.forecast-button, .recommendation-button {
   background-color: #4CAF50; /* Green */
   color: white;
   padding: 10px 20px;
@@ -376,3 +376,23 @@ margin-bottom: 15px;
   margin: auto; /* Center the chart */
   height: 300px; /* Set a height for the chart */
 }
+
+.style-bold {
+  font-weight: bold;
+}
+
+.recommendation-button:hover {
+  background-color: #45a049;
+}
+
+.recommended-products {
+  margin-top: 20px;
+}
+
+.recommended-product {
+  list-style-type: none;
+  padding: 5px;
+  font-weight: bold;
+  color: #333;
+}
+

@@ -138,9 +138,9 @@ const chartOptions = {
       <div className="forecasting-container">
         <h1 className="text-align-center">Sales Forecasting</h1>
         <p className="text-align-center">
-          This component predicts sales data for purchased items. It takes in
-          purchase history and prepares the data for a time series forecasting
-          model. It predicts the next sales data using the latest known data
+          This component predicts sales data for <span className="style-bold">purchased</span> items. It takes in
+          purchase history and prepares the data for a <span className="style-bold">time series forecasting
+          model</span>. It predicts the next sales data using the latest known data
           point and provides a predicted value.
         </p>
         <p>

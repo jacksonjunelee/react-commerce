@@ -11,9 +11,7 @@ const RecommendedProducts = () => {
     // Create user preferences based on purchased items bought before
     const tensorArray = [0, 1, 2].map((ind) => {
       const productId = ind + 1;
-      const item = cartItems.find(
-        (item) => item.id === productId
-      );
+      const item = cartItems.find((item) => item.id === productId);
       return item ? 1 : 0; // 1 if the product is in the cart, 0 otherwise
     });
 
@@ -28,9 +26,7 @@ const RecommendedProducts = () => {
     // Create a quantity tensor from the product data
     const qtyTensorArray = [0, 1, 2].map((ind) => {
       const productId = ind + 1;
-      const item = cartItems.find(
-        (item) => item.id === productId
-      );
+      const item = cartItems.find((item) => item.id === productId);
       return item ? item.qty : 0; // Quantity of each product
     });
 
@@ -99,23 +95,27 @@ const RecommendedProducts = () => {
   };
 
   return (
-    <div>
-      <div>
-        <h1>Product Recommendation System</h1>
-        <button onClick={makeRecommendations}>
-          Recommend Products for User 1
-        </button>
-        {recommendedProducts.length > 0 && (
-          <div>
-            <h3>Recommended Products for User 1:</h3>
-            <ul>
-              {recommendedProducts.map((product) => (
-                <li key={product}>Product {product + 1}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
+    <div className="recommendation-container">
+      <h1 className="text-align-center">Product Recommendation System</h1>
+      <p className="text-align-center">
+        This component recommends products based on your <span className="style-bold">current cart items</span>. Click the button below to get your personalized
+        recommendations!
+      </p>
+      <button className="recommendation-button" onClick={makeRecommendations}>
+        Recommend Products for User 1
+      </button>
+      {recommendedProducts.length > 0 && (
+        <div className="recommended-products">
+          <h3>Recommended Products for You:</h3>
+          <ul>
+            {recommendedProducts.map((product) => (
+              <li key={product} className="recommended-product">
+                Product {product + 1}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
