@@ -1,7 +1,21 @@
 # react-commerce
-A modern ecommerce platform built with React and Redux
 
-# Getting Started with Create React App
+A modern e-commerce platform built with React and Redux.
+
+## Overview
+
+This project features the following functionalities:
+
+- **Add Items to Cart**: Users can easily add products to their shopping cart.
+- **Price Calculation**: Automatically calculates total prices based on item price and quantity.
+- **Mock Checkout Process**: Users can (fake) purchase items by filling out a checkout form.
+- **Remove Items from Cart**: Easily remove items from the cart.
+- **Machine Learning Integration**: 
+  - **Sales Forecasting**: Uses purchase history to predict future sales.
+  - **Recommendation System**: Suggests items based on current cart items and purchasing history, generating a recommendation score based on user activity.
+  - **Experimental Image Classification**: Implements TensorFlow MobileNet for classifying images.
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
