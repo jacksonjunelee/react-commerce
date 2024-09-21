@@ -1,6 +1,6 @@
 # react-commerce
 
-A modern e-commerce platform built with React and Redux.
+A modern e-commerce platform built with React and Redux. Also contains ML models and algorithms built in TensorFlow.
 
 ## Overview
 
