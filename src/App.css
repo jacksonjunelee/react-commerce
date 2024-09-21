@@ -338,6 +338,7 @@ margin-bottom: 15px;
   background-color: #f9f9f9;
   text-align: left;
   padding-bottom: 80px;
+  line-height: 1.3rem;
 }
 
 .forecast-button, .recommendation-button {
@@ -370,6 +371,10 @@ margin-bottom: 15px;
   text-align: center;
 }
 
+.text-align-left {
+  text-align: left;
+}
+
 .chart-container {
   width: 80%; /* Adjust the width as needed */
   max-width: 600px; /* Set a maximum width */
@@ -394,5 +399,9 @@ margin-bottom: 15px;
   padding: 5px;
   font-weight: bold;
   color: #333;
+}
+
+.display-flex {
+  display: flex;
 }
 

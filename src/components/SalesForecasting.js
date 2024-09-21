@@ -137,13 +137,13 @@ const chartOptions = {
     <div>
       <div className="forecasting-container">
         <h1 className="text-align-center">Sales Forecasting</h1>
-        <p className="text-align-center">
+        <p className="text-align-left">
           This component predicts sales data for <span className="style-bold">purchased</span> items. It takes in
           purchase history and prepares the data for a <span className="style-bold">time series forecasting
           model</span>. It predicts the next sales data using the latest known data
           point and provides a predicted value.
         </p>
-        <p>
+        <div>
           To use:
           <ol>
             <li>Add items to the cart.</li>
@@ -162,7 +162,7 @@ const chartOptions = {
               models to make sales predictions.
             </li>
           </ol>
-        </p>
+        </div>
         <button className="forecast-button" onClick={simulateSalesForecasting}>
           Predict Next Month's Sales
         </button>
