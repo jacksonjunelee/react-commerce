@@ -1,75 +1,114 @@
-import React, { useState, useRef } from "react";
-import * as tf from "@tensorflow/tfjs";
+import React, { useState, useEffect } from "react";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 
-const ImageClassification = () => {
-  const [imageURL, setImageURL] = useState(null); // Store the uploaded image
-  const [results, setResults] = useState([]); // Store the classification results
-  const [loading, setLoading] = useState(false); // Indicate model loading
-  const imageRef = useRef(null); // Reference to the image DOM element
-  const fileInputRef = useRef(null); // Reference to the file input
+const ImageClassification = ({ products }) => {
+  const [loading, setLoading] = useState(true);
+  const [productResults, setProductResults] = useState([]);
+  const [results, setResults] = useState([]);
+  const [imageURL, setImageURL] = useState(null); // State for the uploaded image URL
 
-  // Handle image upload
-  const handleUpload = (event) => {
-    const file = event.target.files[0];
-    const imageURL = URL.createObjectURL(file);
-    setImageURL(imageURL); // Update the state with the uploaded image URL
-    setResults([]); // Clear previous results
-  };
+  // Classify all product images on component mount
+  useEffect(() => {
+    const classifyAllProducts = async () => {
+      setLoading(true);
+      const model = await mobilenet.load(); // Load the MobileNet model
 
-  // Classify the uploaded image
-  const classifyImage = async () => {
-    setLoading(true);
-    const imgElement = imageRef.current;
-    const model = await mobilenet.load(); // Load the MobileNet model
-    const predictions = await model.classify(imgElement); // Classify the image
-    setResults(predictions); // Update the results with the classification
-    setLoading(false);
+      const predictions = await Promise.all(
+        products.map(async (product) => {
+          const img = new Image();
+          img.src = product.img; // Assume product.img is the URL of the product image
+          await img.decode(); // Ensure the image is loaded
+          const result = await model.classify(img);
+          return { product, result };
+        })
+      );
+
+      setProductResults(predictions);
+      setLoading(false);
+    };
+
+    classifyAllProducts();
+  }, [products]);
+
+  const handleClassifyUploadedImage = async (imgElement) => {
+    const model = await mobilenet.load();
+    const predictions = await model.classify(imgElement);
+    setResults(predictions);
   };
 
   return (
-    <div>
-      <div>
-        <h1>Image Classification with MobileNet</h1>
+    <div className="image-classification-container">
+      <h1 className="text-align-center">Image Classification with MobileNet</h1>
+      
+      <p className="text-align-left">
+        This component is still <span className="style-bold">experimental</span>. It uses TensorFlow's MobileNet model for image classification. The results and accuracy of the classifications are displayed below.
+      </p>
 
-        {/* Upload Button */}
-        <input
-          type="file"
-          accept="image/*"
-          ref={fileInputRef}
-          onChange={handleUpload}
-          style={{ display: "block", marginBottom: "10px" }}
-        />
-
-        {/* Display Uploaded Image */}
-        {imageURL && (
-          <div>
-            <img
-              src={imageURL}
-              alt="Uploaded"
-              ref={imageRef}
-              style={{ width: "300px", height: "300px", objectFit: "cover" }}
-            />
-            <button onClick={classifyImage} disabled={loading}>
-              {loading ? "Classifying..." : "Classify Image"}
-            </button>
+      {/* Display Product Images Classification Results */}
+      {loading ? (
+        <p>Loading classification results...</p>
+      ) : (
+        <div>
+          <h2>Product Classification Results:</h2>
+          <div className="product-results-container display-flex">
+            {productResults.map(({ product, result }, index) => (
+              <div key={index} className="product-result-item">
+                <h4>{product.title}</h4>
+                <img
+                  src={product.img}
+                  alt={product.title}
+                  className="product-image"
+                />
+                <ul className="results-list">
+                  {result.map((res, predIndex) => (
+                    <li key={predIndex} className="result-item">
+                      {res.className} - {(res.probability * 100).toFixed(2)}%
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
           </div>
-        )}
+        </div>
+      )}
 
-        {/* Display Classification Results */}
-        {results.length > 0 && (
-          <div>
-            <h2>Results:</h2>
-            <ul>
-              {results.map((result, index) => (
-                <li key={index}>
-                  {result.className} - {(result.probability * 100).toFixed(2)}%
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
+      <h3>Try out the image classification model with your own image</h3>
+      {/* Upload Button */}
+      <input
+        type="file"
+        accept="image/*"
+        onChange={(event) => {
+          const file = event.target.files[0];
+          const newImageURL = URL.createObjectURL(file);
+          setImageURL(newImageURL); // Set the uploaded image URL
+          const imgElement = new Image();
+          imgElement.src = newImageURL;
+          imgElement.onload = () => handleClassifyUploadedImage(imgElement);
+        }}
+        className="upload-input"
+      />
+
+      {/* Display Uploaded Image */}
+      {imageURL && (
+        <div className="image-display">
+          <h4>Uploaded Image:</h4>
+          <img src={imageURL} alt="Uploaded" className="uploaded-image" />
+        </div>
+      )}
+
+      {/* Display Uploaded Image Classification Results */}
+      {results.length > 0 && (
+        <div className="results-container">
+          <h2>Uploaded Image Results:</h2>
+          <ul className="results-list">
+            {results.map((result, index) => (
+              <li key={index} className="result-item">
+                {result.className} - {(result.probability * 100).toFixed(2)}%
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

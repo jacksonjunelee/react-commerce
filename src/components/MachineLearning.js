@@ -42,7 +42,7 @@ const MachineLearning = () => {
         </div>
 
         <div>
-          <ImageClassification />
+          <ImageClassification products={products} />
         </div>
       </div>
     </div>
