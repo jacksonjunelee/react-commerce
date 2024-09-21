@@ -21,6 +21,8 @@ const MachineLearning = () => {
           <Link to={`/machine-learning`}>Machine Learning</Link>
         </nav>
 
+        <h1 className="ml-title">Machine Learning Functionalties for Ecommerce</h1>
+
         <div>
           <SalesForecasting />
         </div>
