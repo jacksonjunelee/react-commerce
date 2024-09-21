@@ -2,6 +2,28 @@ import React, { useState, useRef } from "react";
 import * as tf from "@tensorflow/tfjs";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import { useSelector } from "react-redux";
+import { Line } from "react-chartjs-2";
+import {
+  Chart as ChartJS,
+  LineElement,
+  PointElement,
+  LinearScale,
+  CategoryScale,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+
+// Register the required components
+ChartJS.register(
+  LineElement,
+  PointElement,
+  LinearScale,
+  CategoryScale,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const SalesForecasting = () => {
   const [prediction, setPrediction] = useState(null);
@@ -56,7 +78,8 @@ const SalesForecasting = () => {
     await model.fit(X, y, { epochs: 200 });
 
     // Predict the next sales value using the latest known data point
-    const nextMonthSales = tf.tensor2d([[320]]); // Last known sales value
+    const lastSalesValue = purchaseHistoryMap[purchaseHistoryMap.length - 1][0]; // Get the last known sales value
+    const nextMonthSales = tf.tensor2d([[lastSalesValue]]); // Last known sales value
     const predictionTensor = model.predict(nextMonthSales);
 
     // Extract the predicted value and set it in the state
@@ -64,20 +87,100 @@ const SalesForecasting = () => {
     setPrediction(predictedSales);
   };
 
+// Prepare data for the line chart
+const chartData = {
+  labels: [
+    ...purchaseHistory.map((_, index) => `${index + 1}`),
+    prediction ? `${purchaseHistory.length + 1}` : null // Add a label for the predicted sales
+  ].filter(Boolean), // Remove any null values
+  datasets: [
+    {
+      label: "Purchase History",
+      data: purchaseHistory.map((ph) => ph.totalPrice),
+      fill: false,
+      borderColor: "blue",
+      tension: 0.1,
+    },
+    {
+      label: "Predicted Sales",
+      data: prediction
+        ? [...purchaseHistory.map((ph) => ph.totalPrice), prediction] // Add predicted value
+        : [],
+      fill: false,
+      borderColor: "red",
+      tension: 0.1,
+      borderDash: [5, 5],
+    },
+  ],
+};
+
+const chartOptions = {
+  maintainAspectRatio: false,
+  scales: {
+    x: {
+      title: {
+        display: true,
+        text: 'Purchase History',
+      },
+    },
+    y: {
+      title: {
+        display: true,
+        text: 'Dollars',
+      },
+    },
+  },
+};
+
+
   return (
     <div>
       <div className="forecasting-container">
-        <h1>Sales Forecasting</h1>
+        <h1 className="text-align-center">Sales Forecasting</h1>
+        <p className="text-align-center">
+          This component predicts sales data for purchased items. It takes in
+          purchase history and prepares the data for a time series forecasting
+          model. It predicts the next sales data using the latest known data
+          point and provides a predicted value.
+        </p>
+        <p>
+          To use:
+          <ol>
+            <li>Add items to the cart.</li>
+            <li>
+              Click on the cart icon next to the "React Commerce" header. You
+              should see cart items.
+            </li>
+            <li>
+              Click the "Buy Now (for ML purposes only)" button. This button was
+              made to test the ML functionalities of this component and should
+              only be used as such.
+            </li>
+            <li>You can repeat the steps to add more purchase history.</li>
+            <li>
+              Once purchase data is captured, the component can then use ML
+              models to make sales predictions.
+            </li>
+          </ol>
+        </p>
         <button className="forecast-button" onClick={simulateSalesForecasting}>
           Predict Next Month's Sales
         </button>
         {prediction !== null && (
-        <p className="forecast-result">
-          {typeof prediction === "string"
-            ? prediction
-            : `Predicted Sales for Next Month: $${prediction.toFixed(2)}`}
-        </p>
-      )}
+          <p className="forecast-result">
+            {typeof prediction === "string"
+              ? prediction
+              : `Predicted Sales for Next Month: $${prediction.toFixed(2)}`}
+          </p>
+        )}
+
+        {/* Line Chart */}
+        {purchaseHistory.length > 0 && (
+          <div className="chart-container">
+            <h2>Sales Data</h2>
+            <Line data={chartData} options={chartOptions} />
+          </div>
+        )}
       </div>
     </div>
   );
