@@ -49,11 +49,11 @@ const MachineLearning = () => {
         </h1>
 
         <div>
-          <SalesForecasting />
+          <RecommendedProducts products={products} />
         </div>
 
         <div>
-          <RecommendedProducts products={products} />
+          <SalesForecasting />
         </div>
 
         <div>
