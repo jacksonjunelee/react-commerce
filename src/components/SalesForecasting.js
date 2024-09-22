@@ -1,6 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import * as tf from "@tensorflow/tfjs";
-import * as mobilenet from "@tensorflow-models/mobilenet";
 import { useSelector } from "react-redux";
 import { Line } from "react-chartjs-2";
 import {
@@ -42,96 +41,97 @@ const SalesForecasting = () => {
   ]);
 
   const simulateSalesForecasting = async () => {
-    console.log("purchase history: ", purchaseHistory);
-
-    // Check if purchase history is empty
     if (purchaseHistory.length === 0) {
       setPrediction("No sales history available for forecasting.");
       return;
     }
-
+  
     const purchaseHistoryMap = purchaseHistory.map((ph) => [ph.totalPrice]);
     const purchaseHistoryData = tf.tensor2d(purchaseHistoryMap);
-    // Simulated sales data (e.g., monthly sales over a period of time)
-    const salesData = purchaseHistoryData;
-
-    console.log("sales data: ", salesData);
-
-    // Prepare input and output data for the time series forecasting model
-    const X = salesData.slice([0, 0], [salesData.shape[0] - 1, 1]); // Inputs (past sales)
-    const y = salesData.slice([1, 0], [salesData.shape[0] - 1, 1]); // Outputs (future sales)
-
-    // Define the model (Sequential Dense Network)
+  
+    // Normalize data
+    const maxValue = purchaseHistoryData.max().dataSync()[0];
+    const normalizedData = purchaseHistoryData.div(maxValue);
+  
+    // Create input (X) and output (y) datasets
+    const windowSize = 3; // Use the last 3 months for prediction
+    const X = [];
+    const y = [];
+  
+    for (let i = windowSize; i < normalizedData.shape[0]; i++) {
+      X.push(normalizedData.slice([i - windowSize, 0], [windowSize, 1]).arraySync());
+      y.push(normalizedData.get(i, 0));
+    }
+    
+    // Convert X and y to tensors with correct shape
+    const XTensor = tf.tensor2d(X, [X.length, windowSize]); // Specify shape here
+    const yTensor = tf.tensor2d(y, [y.length, 1]); // Shape is (number of samples, 1)
+  
+    // Define the model
     const model = tf.sequential();
-    model.add(
-      tf.layers.dense({ units: 10, inputShape: [1], activation: "relu" })
-    ); // Hidden layer
-    model.add(tf.layers.dense({ units: 1 })); // Output layer (predict future sales)
-
+    model.add(tf.layers.dense({ units: 20, inputShape: [windowSize], activation: "relu" }));
+    model.add(tf.layers.dense({ units: 1 }));
+  
     // Compile the model
     model.compile({
       optimizer: "adam",
       loss: "meanSquaredError",
     });
-
+  
     // Train the model
-    await model.fit(X, y, { epochs: 200 });
-
-    // Predict the next sales value using the latest known data point
-    const lastSalesValue = purchaseHistoryMap[purchaseHistoryMap.length - 1][0]; // Get the last known sales value
-    const nextMonthSales = tf.tensor2d([[lastSalesValue]]); // Last known sales value
-    const predictionTensor = model.predict(nextMonthSales);
-
-    // Extract the predicted value and set it in the state
-    const predictedSales = predictionTensor.dataSync()[0];
+    await model.fit(XTensor, yTensor, { epochs: 500 });
+  
+    // Predict the next sales value
+    const lastWindow = normalizedData.slice([-windowSize, 0], [windowSize, 1]);
+    const predictionTensor = model.predict(lastWindow.expandDims(0));
+  
+    // Extract predicted value, denormalize, and update state
+    const predictedSales = predictionTensor.dataSync()[0] * maxValue; // Denormalize
     setPrediction(predictedSales);
   };
 
-// Prepare data for the line chart
-const chartData = {
-  labels: [
-    ...purchaseHistory.map((_, index) => `${index + 1}`),
-    prediction ? `${purchaseHistory.length + 1}` : null // Add a label for the predicted sales
-  ].filter(Boolean), // Remove any null values
-  datasets: [
-    {
-      label: "Purchase History",
-      data: purchaseHistory.map((ph) => ph.totalPrice),
-      fill: false,
-      borderColor: "blue",
-      tension: 0.1,
-    },
-    {
-      label: "Predicted Sales",
-      data: prediction
-        ? [...purchaseHistory.map((ph) => ph.totalPrice), prediction] // Add predicted value
-        : [],
-      fill: false,
-      borderColor: "red",
-      tension: 0.1,
-      borderDash: [5, 5],
-    },
-  ],
-};
+  // Prepare data for the line chart
+  const chartData = {
+    labels: [
+      ...purchaseHistory.map((_, index) => `${index + 1}`),
+      prediction ? `${purchaseHistory.length + 1}` : null,
+    ].filter(Boolean),
+    datasets: [
+      {
+        label: "Purchase History",
+        data: purchaseHistory.map((ph) => ph.totalPrice),
+        fill: false,
+        borderColor: "blue",
+        tension: 0.1,
+      },
+      {
+        label: "Predicted Sales",
+        data: prediction ? [...purchaseHistory.map((ph) => ph.totalPrice), prediction] : [],
+        fill: false,
+        borderColor: "red",
+        tension: 0.1,
+        borderDash: [5, 5],
+      },
+    ],
+  };
 
-const chartOptions = {
-  maintainAspectRatio: false,
-  scales: {
-    x: {
-      title: {
-        display: true,
-        text: 'Purchase History',
+  const chartOptions = {
+    maintainAspectRatio: false,
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Purchase History',
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Dollars',
+        },
       },
     },
-    y: {
-      title: {
-        display: true,
-        text: 'Dollars',
-      },
-    },
-  },
-};
-
+  };
 
   return (
     <div>

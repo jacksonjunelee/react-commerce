@@ -90,16 +90,15 @@ nav a {
 .productList {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px; /* Adds spacing between products */
-  max-width: 1200px; /* Limit the width of the product list */
-  margin: 20px auto; /* Center the product list */
-  padding: 0 20px; /* Add padding to the left and right */
+  gap: 20px;
+  max-width: 1200px;
+  margin: 20px auto 70px auto;
+  padding: 0 20px;
 }
 
 .product {
   border: 1px solid #ccc;
   padding: 30px;
-  width: 90%;
   text-align: center;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   background-color: #fff;
@@ -108,13 +107,13 @@ nav a {
 
 .product img {
   max-width: 100%;
-  height: auto; /* Keeps the image's natural aspect ratio */
-  max-height: 200px; /* Restricts maximum height */
-  object-fit: contain; /* Ensures the image scales without being cropped */
+  height: auto;
+  max-height: 200px;
+  object-fit: contain;
 }
 
 .productHeader {
-  background-color: #28a745; /* Smooth Vibrant Green */
+  background-color: #28a745;
   color: white;
   padding: 10px 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -282,12 +281,12 @@ footer {
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
   z-index: 1000;
   padding: 20px;
-  transform: translateX(100%); /* Keep it off-screen initially */
+  transform: translateX(100%);
   transition: transform 0.3s ease-in-out;
 }
 
 .sidePane.open {
-  transform: translateX(0); /* Slide it into view */
+  transform: translateX(0);
 }
 
 .closeBtn {
@@ -336,14 +335,14 @@ footer {
   font-size: 18px;
   cursor: pointer;
   padding: 5px;
-  z-index: 1; /* Ensure the button is above other content */
+  z-index: 1;
 }
 
 .removeBtn:hover {
   color: red;
 }
 
-/* Machine Learning Components */
+/* Machine Learning Containers */
 .forecasting-container, .recommendation-container, .image-classification-container {
   max-width: 70%;
   margin: 20px auto;
@@ -358,7 +357,7 @@ footer {
 }
 
 .forecast-button, .recommendation-button {
-  background-color: #4CAF50; /* Green */
+  background-color: #4CAF50;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -368,29 +367,49 @@ footer {
   transition: background-color 0.3s;
 }
 
-.forecast-button:hover, .recommendation-button:hover {
-  background-color: #45a049; /* Darker green */
+.forecast-button:hover {
+  background-color: #45a049;
 }
 
 .forecast-result {
   margin-top: 15px;
   font-size: 18px;
+  color: #333;
+}
+
+.ml-title {
+  text-align: center;
+  text-decoration: underline;
+}
+
+.text-align-center {
+  text-align: center;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+.chart-container {
+  width: 80%;
+  max-width: 600px;
+  margin: auto;
+  height: 300px;
+}
+
+.style-bold {
   font-weight: bold;
 }
 
-/* Image Classification */
-.image-classification {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.recommendation-button:hover {
+  background-color: #45a049;
 }
 
-.image-classification img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 10px;
+.recommended-products {
+  margin-top: 20px;
 }
 
-.image-classification-button {
-  margin-top: 15px;
+.recommended-product {
+  list-style: none;
+  margin-bottom: 10px;
 }
