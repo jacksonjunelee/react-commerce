@@ -50,7 +50,7 @@ const ImageClassification = ({ products }) => {
       ) : (
         <div>
           <h2>Product Classification Results:</h2>
-          <div className="product-results-container display-flex">
+          <div className="product-results-container">
             {productResults.map(({ product, result }, index) => (
               <div key={index} className="product-result-item">
                 <h4>{product.title}</h4>

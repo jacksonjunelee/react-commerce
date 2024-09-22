@@ -27,9 +27,16 @@ const RecommendedProducts = ({ products }) => {
         return item ? 1 : 0;
       }
     );
-  
-    const userProductMatrix = tf.tensor2d([cartTensorArray], [1, cartTensorArray.length]);
-  
+
+    console.log("cart tensor array: ", cartTensorArray);
+
+    const userProductMatrix = tf.tensor2d(
+      [cartTensorArray],
+      [1, cartTensorArray.length]
+    );
+
+    console.log("user product matrix: ", userProductMatrix.arraySync());
+
     const qtyTensorArray = Array.from(
       { length: productArrayLength },
       (_, ind) => {
@@ -38,11 +45,21 @@ const RecommendedProducts = ({ products }) => {
         return item ? item.qty : 0;
       }
     );
-  
+
+    console.log("qty tensor array: ", qtyTensorArray);
+
     const qtyMatrix = tf.tensor1d(qtyTensorArray);
-    const adjustedUserProductMatrix = userProductMatrix.mul(qtyMatrix.reshape([1, -1]));
-  
-    // Create the purchase matrix
+    const adjustedUserProductMatrix = userProductMatrix.mul(
+      qtyMatrix.reshape([1, -1])
+    );
+
+    console.log("qty matrix: ", qtyMatrix.arraySync());
+    console.log(
+      "adjecsted user product matrix: ",
+      adjustedUserProductMatrix.arraySync()
+    );
+
+    // Create the purchase matrix without averaging
     const purchaseMatrix = purchaseHistory.flatMap((purchase) =>
       purchase.productsBought.map((product) => {
         const productMatrix = Array(productArrayLength).fill(0);
@@ -50,49 +67,53 @@ const RecommendedProducts = ({ products }) => {
         return productMatrix;
       })
     );
-  
+
+    console.log("purchase mattrix: ", purchaseMatrix);
+
     let combinedPreferences = adjustedUserProductMatrix;
-  
+
+    console.log("combined preferences: ", combinedPreferences.arraySync());
+
     if (purchaseMatrix.length > 0) {
-      const purchaseTensor = tf.tensor2d(purchaseMatrix, [purchaseMatrix.length, productArrayLength]);
-      const avgPurchaseMatrix = purchaseTensor.mean(0);
-  
-      // Create the mask safely
-      const mask = userProductMatrix.equal(1).reshape([1, -1]);
-      
-      // Check the shape and value of the mask
-      if (mask) {
-        console.log("Mask: ", mask.arraySync());
-        const positiveScores = avgPurchaseMatrix.where(mask);
-        
-        // Ensure positiveScores is a valid tensor before adding
-        if (positiveScores) {
-          combinedPreferences = combinedPreferences.add(positiveScores.reshape([1, -1])).maximum(0);
-        } else {
-          console.warn("Positive scores tensor is invalid.");
-        }
-      } else {
-        console.warn("Mask tensor is invalid.");
-      }
+      const purchaseTensor = tf.tensor2d(purchaseMatrix, [
+        purchaseMatrix.length,
+        productArrayLength,
+      ]);
+
+      console.log("purchase tensor: ", purchaseTensor.arraySync());
+
+      // Combine user product matrix with purchase tensor
+      combinedPreferences = combinedPreferences.add(purchaseTensor.sum(0));
+
+      console.log(
+        "combined preferences with purchases: ",
+        combinedPreferences.arraySync()
+      );
     } else {
       console.warn("No purchase history available.");
     }
-  
+
     const allProductsMatrix = makeAllProductsMatrix(productArrayLength);
     const scores = combinedPreferences.matMul(allProductsMatrix.transpose());
-  
+
     const recommendations = scores.arraySync()[0];
-  
+
+    console.log("all products matrix: ", allProductsMatrix.arraySync());
+    console.log("scores: ", scores.arraySync());
+
     const productIndicesWithScores = recommendations
       .map((score, index) => ({ score, index }))
       .filter((item) => item.score >= 3)
       .sort((a, b) => b.score - a.score);
-  
+
+    console.log("productIndicesWithScores: ", productIndicesWithScores);
+
     const topRecommendations = productIndicesWithScores.slice(0, 3);
+
+    console.log("top recommendations: ", topRecommendations);
     setRecommendedProducts(topRecommendations.map((item) => item.index));
     setProductScores(topRecommendations.map((item) => item.score));
   };
-  
 
   return (
     <div className="recommendation-container">

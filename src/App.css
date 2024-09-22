@@ -214,6 +214,7 @@ nav a {
   border-radius: 5px;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
   justify-content: space-around;
+  position: relative;
 }
 
 .cart_item__mini img {
@@ -412,4 +413,14 @@ footer {
 .recommended-product {
   list-style: none;
   margin-bottom: 10px;
+}
+
+.display-flex {
+  display: flex;
+}
+
+.product-results-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  gap: 20px; /* Gap between columns */
 }

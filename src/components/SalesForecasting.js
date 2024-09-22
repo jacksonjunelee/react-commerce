@@ -42,53 +42,78 @@ const SalesForecasting = () => {
 
   const simulateSalesForecasting = async () => {
     if (purchaseHistory.length === 0) {
-      setPrediction("No sales history available for forecasting.");
-      return;
+        setPrediction("No sales history available for forecasting.");
+        return;
     }
-  
+
     const purchaseHistoryMap = purchaseHistory.map((ph) => [ph.totalPrice]);
     const purchaseHistoryData = tf.tensor2d(purchaseHistoryMap);
-  
-    // Normalize data
+
+    // const purchaseHistoryData = testData;
+
+    // Normalize data using min-max normalization
+    const minValue = purchaseHistoryData.min().dataSync()[0];
     const maxValue = purchaseHistoryData.max().dataSync()[0];
-    const normalizedData = purchaseHistoryData.div(maxValue);
-  
+
+    const normalizedData = purchaseHistoryData.sub(minValue).div(maxValue - minValue);
+
     // Create input (X) and output (y) datasets
     const windowSize = 3; // Use the last 3 months for prediction
     const X = [];
     const y = [];
-  
+
+    // for (let i = windowSize; i < normalizedData.shape[0]; i++) {
+    //     const xValues = normalizedData.slice([i - windowSize, 0], [windowSize, 1]).arraySync();
+    //     X.push(xValues); // This should already be a 1D array
+
+    //     const yValue = normalizedData.get(i, 0); // Get the corresponding output value
+    //     y.push(yValue); // This should be a number
+    // }
     for (let i = windowSize; i < normalizedData.shape[0]; i++) {
-      X.push(normalizedData.slice([i - windowSize, 0], [windowSize, 1]).arraySync());
-      y.push(normalizedData.get(i, 0));
+      const xValues = normalizedData.slice([i - windowSize, 0], [windowSize, 1]).arraySync();
+      X.push(xValues); // This should already be a 1D array
+
+      const yValue = normalizedData.arraySync()[i][0]; // Get the corresponding output value
+      y.push(yValue); // This should be a number
     }
-    
+
+    console.log("X before tensor2d:", X); // Log X
+    console.log("y before tensor2d:", y); // Log y
+
     // Convert X and y to tensors with correct shape
-    const XTensor = tf.tensor2d(X, [X.length, windowSize]); // Specify shape here
-    const yTensor = tf.tensor2d(y, [y.length, 1]); // Shape is (number of samples, 1)
-  
+    const XTensor = tf.tensor2d(X, [X.length, windowSize]);
+    const yTensor = tf.tensor2d(y.map(value => [value]), [y.length, 1]); // Ensure y is a 2D array
+
     // Define the model
     const model = tf.sequential();
-    model.add(tf.layers.dense({ units: 20, inputShape: [windowSize], activation: "relu" }));
+    model.add(
+        tf.layers.dense({
+            units: 20,
+            inputShape: [windowSize],
+            activation: "relu",
+        })
+    );
     model.add(tf.layers.dense({ units: 1 }));
-  
+
     // Compile the model
     model.compile({
-      optimizer: "adam",
-      loss: "meanSquaredError",
+        optimizer: "adam",
+        loss: "meanSquaredError",
     });
-  
+
     // Train the model
     await model.fit(XTensor, yTensor, { epochs: 500 });
-  
+
     // Predict the next sales value
-    const lastWindow = normalizedData.slice([-windowSize, 0], [windowSize, 1]);
+    const lastWindow = normalizedData
+        .slice([-windowSize, 0], [windowSize, 1])
+        .squeeze();
     const predictionTensor = model.predict(lastWindow.expandDims(0));
-  
+
     // Extract predicted value, denormalize, and update state
-    const predictedSales = predictionTensor.dataSync()[0] * maxValue; // Denormalize
+    const predictedSales = predictionTensor.dataSync()[0] * maxValue;
     setPrediction(predictedSales);
-  };
+};
 
   // Prepare data for the line chart
   const chartData = {
@@ -106,7 +131,9 @@ const SalesForecasting = () => {
       },
       {
         label: "Predicted Sales",
-        data: prediction ? [...purchaseHistory.map((ph) => ph.totalPrice), prediction] : [],
+        data: prediction
+          ? [...purchaseHistory.map((ph) => ph.totalPrice), prediction]
+          : [],
         fill: false,
         borderColor: "red",
         tension: 0.1,
@@ -121,13 +148,13 @@ const SalesForecasting = () => {
       x: {
         title: {
           display: true,
-          text: 'Purchase History',
+          text: "Purchase History",
         },
       },
       y: {
         title: {
           display: true,
-          text: 'Dollars',
+          text: "Dollars",
         },
       },
     },
@@ -138,10 +165,12 @@ const SalesForecasting = () => {
       <div className="forecasting-container">
         <h1 className="text-align-center">Sales Forecasting</h1>
         <p className="text-align-left">
-          This component predicts sales data for <span className="style-bold">purchased</span> items. It takes in
-          purchase history and prepares the data for a <span className="style-bold">time series forecasting
-          model</span>. It predicts the next sales data using the latest known data
-          point and provides a predicted value.
+          This component predicts sales data for{" "}
+          <span className="style-bold">purchased</span> items. It takes in
+          purchase history and prepares the data for a{" "}
+          <span className="style-bold">time series forecasting model</span>. It
+          predicts the next sales data using the latest known data point and
+          provides a predicted value.
         </p>
         <div>
           To use:
