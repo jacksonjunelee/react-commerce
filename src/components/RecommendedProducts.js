@@ -184,7 +184,7 @@ const RecommendedProducts = ({ products }) => {
       {recommendedProducts.length > 0 && (
         <div className="recommended-products">
           <h3>Recommended Products for You:</h3>
-          <ul className="display-flex">
+          <ul className="product-grid">
             {recommendedProducts.map((productIndex, i) => {
               const product = products[productIndex];
               const score = productScores[i];

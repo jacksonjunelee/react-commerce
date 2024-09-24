@@ -1,13 +1,14 @@
 # react-commerce
 
-A modern e-commerce platform built with React and Redux. Also contains ML models and algorithms built in TensorFlow.
+A modern e-commerce platform built on React and Redux, featuring integrated machine learning models and algorithms powered by TensorFlow for personalized product recommendations, sales forecasting, and image classification.
 
 ## Overview
 
 This project features the following functionalities:
 
 - **Add Items to Cart**: Users can easily add products to their shopping cart.
-- **Price Calculation**: Automatically calculates total prices based on item price and quantity.
+- **Pric
+- e Calculation**: Automatically calculates total prices based on item price and quantity.
 - **Mock Checkout Process**: Users can (fake) purchase items by filling out a checkout form.
 - **Remove Items from Cart**: Easily remove items from the cart.
 - **Machine Learning Integration**: 

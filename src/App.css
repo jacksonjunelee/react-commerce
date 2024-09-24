@@ -424,3 +424,11 @@ footer {
   grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
   gap: 20px; /* Gap between columns */
 }
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust 200px as per your card width */
+  gap: 30px; /* 20px spacing between items */
+  list-style-type: none;
+  padding: 0;
+}

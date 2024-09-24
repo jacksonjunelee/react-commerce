@@ -58,7 +58,7 @@ const SalesForecasting = () => {
     const normalizedData = purchaseHistoryData.sub(minValue).div(maxValue - minValue);
 
     // Create input (X) and output (y) datasets
-    const windowSize = 3; // Use the last 3 months for prediction
+    const windowSize = 2; // Use the last 2 months for prediction
     const X = [];
     const y = [];
 
@@ -71,14 +71,21 @@ const SalesForecasting = () => {
     // }
     for (let i = windowSize; i < normalizedData.shape[0]; i++) {
       const xValues = normalizedData.slice([i - windowSize, 0], [windowSize, 1]).arraySync();
-      X.push(xValues); // This should already be a 1D array
-
+    
+      // Ensure that xValues is a valid 1D array of numbers
+      if (Array.isArray(xValues) && xValues.every(val => Array.isArray(val) && typeof val[0] === 'number')) {
+        X.push(xValues.map(val => val[0])); // Push a flattened array of numbers
+      }
+    
       const yValue = normalizedData.arraySync()[i][0]; // Get the corresponding output value
       y.push(yValue); // This should be a number
     }
 
     console.log("X before tensor2d:", X); // Log X
     console.log("y before tensor2d:", y); // Log y
+
+    console.log('x after: ', [X.length, windowSize])
+    console.log('y after: ', y.map(value => [value]), [y.length, 1])
 
     // Convert X and y to tensors with correct shape
     const XTensor = tf.tensor2d(X, [X.length, windowSize]);
@@ -169,7 +176,7 @@ const SalesForecasting = () => {
           <span className="style-bold">purchased</span> items. It takes in
           purchase history and prepares the data for a{" "}
           <span className="style-bold">time series forecasting model</span>. It
-          predicts the next sales data using the latest known data point and
+          predicts the next sales data using the latest known <strong>2</strong> data point and
           provides a predicted value.
         </p>
         <div>
