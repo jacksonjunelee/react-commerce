@@ -7,8 +7,7 @@ A modern e-commerce platform built on React and Redux, featuring integrated mach
 This project features the following functionalities:
 
 - **Add Items to Cart**: Users can easily add products to their shopping cart.
-- **Pric
-- e Calculation**: Automatically calculates total prices based on item price and quantity.
+- **Price Calculation**: Automatically calculates total prices based on item price and quantity.
 - **Mock Checkout Process**: Users can (fake) purchase items by filling out a checkout form.
 - **Remove Items from Cart**: Easily remove items from the cart.
 - **Machine Learning Integration**: 
