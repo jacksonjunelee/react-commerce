@@ -12,21 +12,21 @@ app.use('/images', express.static(path.join(__dirname, '../public/images')));
 // Connect to MongoDB
 connectDB();
 
-const Product = require("./models/product.js");
-const { MOCK_DATA } = require("./mockData"); // Correct import syntax
+// const Product = require("./models/product.js");
+// const { MOCK_DATA } = require("./mockData"); // Correct import syntax
 
-const addProducts = async () => {
-  const products = MOCK_DATA;
+// const addProducts = async () => {
+//   const products = MOCK_DATA;
 
-  try {
-    await Product.insertMany(products);
-    console.log("Products added!");
-  } catch (error) {
-    console.log("Error adding products:", error);
-  }
-};
+//   try {
+//     await Product.insertMany(products);
+//     console.log("Products added!");
+//   } catch (error) {
+//     console.log("Error adding products:", error);
+//   }
+// };
 
-addProducts();
+// addProducts();
 
 // Middleware
 app.use(cors());
