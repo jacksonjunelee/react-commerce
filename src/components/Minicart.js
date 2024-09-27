@@ -47,7 +47,8 @@ const Minicart = ({ cartItems, onRemoveFromCart, hideText, hideButton }) => {
             {onRemoveFromCart && (
               <button
                 className="removeBtn"
-                onClick={() => onRemoveFromCart(product.id)}
+                data-name="remove_cart"
+                onClick={(e) => onRemoveFromCart(e, product)}
               >
                 <FaTimes />
               </button>

@@ -9,6 +9,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { RouterProvider } from 'react-router-dom';
 import Checkout from './components/Checkout';
 import MachineLearning from './components/MachineLearning';
+import EventTracking from './components/EventTracking';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
   {
     path: '/machine-learning',
     element: <MachineLearning />
+  },
+  {
+    path: '/event-tracking',
+    element: <EventTracking />
   }
 ]);
 

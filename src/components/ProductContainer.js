@@ -5,6 +5,8 @@ import { addToCart, removeFromCart } from "../state/actions/cartActions";
 import Minicart from "./Minicart";
 import { FaShoppingCart } from "react-icons/fa"; // Import shopping cart icon from react-icons
 import { Link } from "react-router-dom";
+import { trackEvent as trackEventUtil } from "../utils/eventLogger";
+import { trackEvent as trackEventAction } from "../state/actions/analyticsActions";
 
 const ProductContainer = () => {
   const dispatch = useDispatch();
@@ -17,15 +19,22 @@ const ProductContainer = () => {
   const handleAddToCart = (product) => {
     // setCart((prevCart) => [...prevCart, product]);
     // dispatch action
+    const data = { name: "add_cart", eventData: product };
     dispatch(addToCart(product.id, 1));
+    dispatch(trackEventAction("button_click", data));
   };
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
   };
 
-  const onRemoveFromCart = (id) => {
-    dispatch(removeFromCart(id));
+  const onRemoveFromCart = (e, product) => {
+    const data = { name: "remove_cart", eventData: product };
+
+    dispatch(removeFromCart(product.id));
+    dispatch(trackEventAction("button_click", data));
+
+    // dispatch(trackEventAction('button_click', data ))
   };
 
   return (
@@ -33,17 +42,17 @@ const ProductContainer = () => {
       <header className="productHeader">
         <div className="headerContent">
           <h1 className="siteTitle">React Commerce</h1>
-        <button
-          className="cartIcon"
-          onClick={toggleCart}
-          aria-label="View Cart"
-        >
-          <FaShoppingCart color="#FFF" aria-hidden="true" /> {/* Cart Icon */}
-          <span className="cartCount">
-            {cartItems.reduce((acc, val) => acc + val.qty, 0)}
-          </span>{" "}
-          {/* Display the number of items */}
-        </button>
+          <button
+            className="cartIcon"
+            onClick={toggleCart}
+            aria-label="View Cart"
+          >
+            <FaShoppingCart color="#FFF" aria-hidden="true" /> {/* Cart Icon */}
+            <span className="cartCount">
+              {cartItems.reduce((acc, val) => acc + val.qty, 0)}
+            </span>{" "}
+            {/* Display the number of items */}
+          </button>
         </div>
       </header>
 
@@ -52,6 +61,7 @@ const ProductContainer = () => {
         <Link to={`/`}>Products</Link>
         <Link to={`/cart`}>Cart</Link>
         <Link to={`/machine-learning`}>Machine Learning</Link>
+        <Link to={`/event-tracking`}>Event Tracking</Link>
       </nav>
 
       <div className="container">

@@ -1,11 +1,18 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, removeFromCart } from '../state/actions/cartActions';
+import { trackEvent } from '../state/actions/analyticsActions';
 
 const Cart = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+
+  const handleClick = (event, item) => {
+    console.log('event: ', event)
+    dispatch(removeFromCart(item.product)) 
+    dispatch(trackEvent('button_click', { name: 'remove_cart',  eventData: {}}))
+  }
 
   return (
     <div>
@@ -18,7 +25,10 @@ const Cart = () => {
             <li key={item.product}>
               <h4>{item.title}</h4>
               <p>Quantity: {item.qty}</p>
-              <button onClick={() => dispatch(removeFromCart(item.product))}>
+              <button 
+                  onClick={(e) => handleClick(e, item)}
+                  data-name="remove_cart"  
+                >
                 Remove
               </button>
             </li>
