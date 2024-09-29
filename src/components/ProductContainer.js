@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProductList from "./ProductList";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../state/actions/cartActions";
@@ -7,12 +7,12 @@ import { FaShoppingCart } from "react-icons/fa"; // Import shopping cart icon fr
 import { Link } from "react-router-dom";
 import { trackEvent as trackEventUtil } from "../utils/eventLogger";
 import { trackEvent as trackEventAction } from "../state/actions/analyticsActions";
+import Analytics from "../utils/Analytics";
 
 const ProductContainer = () => {
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.cart);
   const { loading, error, cartItems } = cart;
-
   const [isCartOpen, setIsCartOpen] = useState(false); // State to control the side pane visibility
 
   // Callback to handle product being added to the cart
@@ -33,12 +33,11 @@ const ProductContainer = () => {
 
     dispatch(removeFromCart(product.id));
     dispatch(trackEventAction("button_click", data));
-
-    // dispatch(trackEventAction('button_click', data ))
   };
 
   return (
     <div className="productContainer">
+      <Analytics data={{ page: "products" }} />
       <header className="productHeader">
         <div className="headerContent">
           <h1 className="siteTitle">React Commerce</h1>

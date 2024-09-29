@@ -4,6 +4,7 @@ import { FaCreditCard } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Minicart from "./Minicart";
 import { FaShoppingCart } from "react-icons/fa"; // Import shopping cart icon from react-icons
+import Analytics from "../utils/Analytics";
 
 const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -41,6 +42,7 @@ const Checkout = () => {
 
   return (
     <>
+      <Analytics data={{ page: "checkout" }} />
       <header className="productHeader">
         <div className="headerContent">
           <h1 className="siteTitle">React Commerce</h1>

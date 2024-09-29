@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { FaShoppingCart } from "react-icons/fa"; // Import shopping cart icon from react-icons
+import Analytics from "../utils/Analytics";
 
 const EventTracking = () => {
   const dispatch = useDispatch();
@@ -13,7 +14,8 @@ const EventTracking = () => {
 
   return (
     <div>
-      <div className="productContainer">
+      <Analytics data={{ page: "event-tracking" }} />
+      <div className="productContainer analytics-header">
         <header className="productHeader">
           <div className="headerContent">
             <h1 className="siteTitle">React Commerce</h1>
@@ -37,20 +39,41 @@ const EventTracking = () => {
         </nav>
 
         <h1 className="ml-title">Event Tracking and Analysis for Ecommerce</h1>
-        {analytics.map((event, index) => (
-          <li key={index}>
-            <p>
-              <strong>Event Name:</strong> {event.eventName}
-            </p>
-            <p>
-              <strong>Event Data:</strong> {JSON.stringify(event.data)}
-            </p>
-            <p>
-              <strong>Timestamp:</strong> {event.timestamp}
-            </p>
-          </li>
-        ))}
-        <ul></ul>
+
+        {/* Two-column layout for event data and chart */}
+        <div className="analytics-layout">
+          <div className="analytics-container">
+            <h2>Event Data</h2>
+            {analytics.length > 0 ? (
+              analytics.map((event, index) => (
+                <div key={index} className="analytics-item">
+                  <p>
+                    <strong>Event Name:</strong> {event.eventName}
+                  </p>
+                  <p>
+                    <strong>Event Data:</strong>{" "}
+                    {JSON.stringify(event.data, null, 2)}
+                  </p>
+                  <p>
+                    <strong>Timestamp:</strong>{" "}
+                    {new Date(event.timestamp).toLocaleString()}
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p>No analytics data available.</p>
+            )}
+          </div>
+
+          {/* Placeholder for the chart */}
+          <div className="chart-container">
+            <h2>Analysis</h2>
+            {/* Here you would insert the chart component */}
+            <div className="chart-placeholder">
+              <p>Chart will be displayed here.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

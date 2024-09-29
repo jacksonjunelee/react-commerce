@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../state/actions/productActions";
 import { FaShoppingCart } from "react-icons/fa"; // Import shopping cart icon from react-icons
+import Analytics from "../utils/Analytics";
 
 const MachineLearning = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const MachineLearning = () => {
 
   return (
     <div>
+      <Analytics data={{ page: "machine-learning" }} />
       <div className="productContainer">
         <header className="productHeader">
           <div className="headerContent">
