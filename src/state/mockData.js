@@ -6,7 +6,10 @@ import comb_image from "../images/comb_image.jpeg";
 import basketball_image from "../images/basketball_image.jpeg";
 import tv_image from "../images/tv_image.jpeg";
 
-const domain = "http://localhost:3000/";
+const isProduction = process.env.NODE_ENV === "production";
+let domain = "http://localhost:3000/";
+
+if (isProduction) domain = "https://react-commerce-steel.vercel.app/";
 
 export const MOCK_DATA = [
   {
