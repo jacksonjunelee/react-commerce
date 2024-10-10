@@ -3,11 +3,12 @@ import ProductList from "./ProductList";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, removeFromCart } from "../state/actions/cartActions";
 import Minicart from "./Minicart";
-import { FaShoppingCart } from "react-icons/fa"; // Import shopping cart icon from react-icons
+import { FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { trackEvent as trackEventUtil } from "../utils/eventLogger";
 import { trackEvent as trackEventAction } from "../state/actions/analyticsActions";
 import Analytics from "../utils/Analytics";
+import Header from "./Header";
 
 const ProductContainer = () => {
   const dispatch = useDispatch();
@@ -37,31 +38,7 @@ const ProductContainer = () => {
 
   return (
     <div className="productContainer">
-      <Analytics data={{ page: "products" }} />
-      <header className="productHeader">
-        <div className="headerContent">
-          <h1 className="siteTitle">React Commerce</h1>
-          <button
-            className="cartIcon"
-            onClick={toggleCart}
-            aria-label="View Cart"
-          >
-            <FaShoppingCart color="#FFF" aria-hidden="true" /> {/* Cart Icon */}
-            <span className="cartCount">
-              {cartItems.reduce((acc, val) => acc + val.qty, 0)}
-            </span>{" "}
-            {/* Display the number of items */}
-          </button>
-        </div>
-      </header>
-
-      <nav className="mainNav" aria-label="Main Navigation">
-        <Link to={`/`}>Home</Link>
-        <Link to={`/`}>Products</Link>
-        <Link to={`/cart`}>Cart</Link>
-        <Link to={`/machine-learning`}>Machine Learning</Link>
-        <Link to={`/event-tracking`}>Event Tracking</Link>
-      </nav>
+      <Header cartItems={cartItems} toggleCart={toggleCart} />
 
       <div className="container">
         <ProductList onAddToCart={handleAddToCart} />

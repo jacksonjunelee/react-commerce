@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import Minicart from "./Minicart";
 import { FaShoppingCart } from "react-icons/fa"; // Import shopping cart icon from react-icons
 import Analytics from "../utils/Analytics";
+import Header from "./Header";
 
 const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -16,6 +17,7 @@ const Checkout = () => {
   const [state, setState] = useState("");
   const [zip, setZip] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("Credit Card");
+  const [isCartOpen, setIsCartOpen] = useState(false); // State to control the side pane visibility
 
   // Calculate total price
   const calculateTotalPrice = () => {
@@ -40,28 +42,13 @@ const Checkout = () => {
     });
   };
 
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
+
   return (
     <>
-      <Analytics data={{ page: "checkout" }} />
-      <header className="productHeader">
-        <div className="headerContent">
-          <h1 className="siteTitle">React Commerce</h1>
-          <button className="cartIcon" aria-label="View Cart">
-            <FaShoppingCart color="#FFF" aria-hidden="true" /> {/* Cart Icon */}
-            <span className="cartCount">
-              {cartItems.reduce((acc, val) => acc + val.qty, 0)}
-            </span>{" "}
-            {/* Display the number of items */}
-          </button>
-        </div>
-      </header>
-
-      <nav className="mainNav" aria-label="Main Navigation">
-        <Link to={`/`}>Home</Link>
-        <Link to={`/`}>Products</Link>
-        <Link to={`/cart`}>Cart</Link>
-        <Link to={`/machine-learning`}>Machine Learning</Link>
-      </nav>
+      <Header cartItems={cartItems} />
 
       <div className="checkoutContainer">
         <div className="cartSummary">
@@ -167,6 +154,16 @@ const Checkout = () => {
               <option value="Bank Transfer">Bank Transfer</option>
             </select>
           </div>
+
+          {/* Side pane for minicart */}
+          {isCartOpen && (
+            <div className={`sidePane ${isCartOpen ? "open" : ""}`}>
+              <button className="closeBtn" onClick={toggleCart}>
+                Close
+              </button>
+              <Minicart cartItems={cartItems} onRemoveFromCart={() => {}} />
+            </div>
+          )}
 
           <button type="submit">
             <FaCreditCard /> Place Order
