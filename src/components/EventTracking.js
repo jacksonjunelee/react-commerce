@@ -4,6 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { FaShoppingCart } from "react-icons/fa"; // Import shopping cart icon from react-icons
 import Analytics from "../utils/Analytics";
 import Header from "./Header";
+import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
+import { Chart, registerables } from "chart.js";
+
+// Register all necessary components
+Chart.register(...registerables);
 
 const EventTracking = () => {
   const dispatch = useDispatch();
@@ -16,6 +22,36 @@ const EventTracking = () => {
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
+  };
+
+  // Prepare data for the Line Chart
+  const lineChartData = {
+    labels: analytics.map((event) =>
+      new Date(event.timestamp).toLocaleDateString()
+    ),
+    datasets: [
+      {
+        label: "Events Over Time",
+        data: analytics.map((event) => event.data.someValue), // Replace 'someValue' with the actual property to visualize
+        fill: false,
+        backgroundColor: "rgba(75,192,192,0.4)",
+        borderColor: "rgba(75,192,192,1)",
+      },
+    ],
+  };
+
+  // Prepare data for the Bar Chart
+  const barChartData = {
+    labels: analytics.map((event) => event.eventName),
+    datasets: [
+      {
+        label: "Event Frequency",
+        data: analytics.map((event) => event.data.someCount), // Replace 'someCount' with the actual property to visualize
+        backgroundColor: "rgba(255,99,132,0.2)",
+        borderColor: "rgba(255,99,132,1)",
+        borderWidth: 1,
+      },
+    ],
   };
 
   return (
@@ -55,12 +91,16 @@ const EventTracking = () => {
             )}
           </div>
 
-          {/* Placeholder for the chart */}
+          {/* Charts for visual representation */}
           <div className="chart-container">
             <h2>Analysis</h2>
-            {/* Here you would insert the chart component */}
             <div className="chart-placeholder">
-              <p>Chart will be displayed here.</p>
+              <h3>Line Chart</h3>
+              <Line data={lineChartData} />
+            </div>
+            <div className="chart-placeholder">
+              <h3>Bar Chart</h3>
+              <Bar data={barChartData} />
             </div>
           </div>
         </div>
