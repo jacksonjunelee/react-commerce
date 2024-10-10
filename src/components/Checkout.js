@@ -48,7 +48,12 @@ const Checkout = () => {
 
   return (
     <>
-      <Header cartItems={cartItems} />
+      <Analytics data={{ page: "checkout" }} />
+      <Header
+        cartItems={cartItems}
+        toggleCart={toggleCart}
+        isCartOpen={isCartOpen}
+      />
 
       <div className="checkoutContainer">
         <div className="cartSummary">
@@ -154,16 +159,6 @@ const Checkout = () => {
               <option value="Bank Transfer">Bank Transfer</option>
             </select>
           </div>
-
-          {/* Side pane for minicart */}
-          {isCartOpen && (
-            <div className={`sidePane ${isCartOpen ? "open" : ""}`}>
-              <button className="closeBtn" onClick={toggleCart}>
-                Close
-              </button>
-              <Minicart cartItems={cartItems} onRemoveFromCart={() => {}} />
-            </div>
-          )}
 
           <button type="submit">
             <FaCreditCard /> Place Order

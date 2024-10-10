@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../state/actions/productActions";
 import { FaShoppingCart } from "react-icons/fa"; // Import shopping cart icon from react-icons
 import Analytics from "../utils/Analytics";
+import Header from "./Header";
 
 const MachineLearning = () => {
   const dispatch = useDispatch();
@@ -16,14 +17,25 @@ const MachineLearning = () => {
   const { loading, error, products } = productList;
   const cart = useSelector((state) => state.cart);
   const { cartItems } = cart;
+  const [isCartOpen, setIsCartOpen] = useState(false); // State to control the side pane visibility
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
 
+  const toggleCart = () => {
+    setIsCartOpen(!isCartOpen);
+  };
+
   return (
     <div>
-
+      <div className="productContainer">
+        <Analytics data={{ page: "machine-learning" }} />
+        <Header
+          cartItems={cartItems}
+          toggleCart={toggleCart}
+          isCartOpen={isCartOpen}
+        />
 
         <h1 className="ml-title">
           Machine Learning Functionalties for Ecommerce

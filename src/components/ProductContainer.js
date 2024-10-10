@@ -38,6 +38,7 @@ const ProductContainer = () => {
 
   return (
     <div className="productContainer">
+      <Analytics data={{ page: "product" }} />
       <Header cartItems={cartItems} toggleCart={toggleCart} />
 
       <div className="container">

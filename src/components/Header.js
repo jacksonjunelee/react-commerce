@@ -3,11 +3,11 @@ import Analytics from "../utils/Analytics";
 import { FaShoppingCart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Minicart from "./Minicart";
 
-const Header = ({ cartItems, toggleCart }) => {
+const Header = ({ cartItems, toggleCart, isCartOpen, pageAnalysis }) => {
   return (
     <>
-      <Analytics data={{ page: "products" }} />
       <header className="productHeader">
         <div className="headerContent">
           <h1 className="siteTitle">React Commerce</h1>
@@ -32,6 +32,16 @@ const Header = ({ cartItems, toggleCart }) => {
         <Link to={`/machine-learning`}>Machine Learning</Link>
         <Link to={`/event-tracking`}>Event Tracking</Link>
       </nav>
+
+      {/* Side pane for minicart */}
+      {isCartOpen && (
+        <div className={`sidePane ${isCartOpen ? "open" : ""}`}>
+          <button className="closeBtn" onClick={toggleCart}>
+            Close
+          </button>
+          <Minicart cartItems={cartItems} onRemoveFromCart={() => {}} />
+        </div>
+      )}
     </>
   );
 };
