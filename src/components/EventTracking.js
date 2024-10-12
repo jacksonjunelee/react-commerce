@@ -24,33 +24,14 @@ const EventTracking = () => {
     setIsCartOpen(!isCartOpen);
   };
 
-  // Step 1: Prepare data for line chart
-  const formattedEvents = {};
-
-  // Format data by event name and timestamp
-  analytics.forEach(({ eventName, timestamp }) => {
-    const time = new Date(timestamp).toLocaleTimeString();
-
-    if (!formattedEvents[time]) {
-      formattedEvents[time] = { page_load: 0, button_click: 0 };
-    }
-
-    formattedEvents[time][eventName]++;
-  });
-
-  // Step 2: Prepare labels (timestamps) and datasets for Chart.js
-  const labels = Object.keys(formattedEvents);
-  const pageLoadData = labels.map((label) => formattedEvents[label].page_load);
-  const buttonClickData = labels.map(
-    (label) => formattedEvents[label].button_click
-  );
+  const lineData = formatLineData(analytics);
+  const labels = lineData.labels;
+  const pageLoadData = lineData.data.pageLoadData;
+  const buttonClickData = lineData.data.buttonClickData;
 
   // Prepare data for the Line Chart
   const lineChartData = {
     labels,
-    // labels: analytics.map((event) =>
-    //   new Date(event.timestamp).toLocaleDateString()
-    // ),
     datasets: [
       {
         label: "Page Load",
@@ -77,15 +58,9 @@ const EventTracking = () => {
   };
 
   // Prepare data for the Bar Chart
-  const eventCounts = {};
-
-  analytics.forEach((event) => {
-    const eventName = event.eventName;
-    eventCounts[eventName] = (eventCounts[eventName] || 0) + 1;
-  });
-
-  const eventLabels = Object.keys(eventCounts);
-  const eventData = Object.values(eventCounts);
+  const barData = formatBarData(analytics);
+  const eventLabels = barData.eventLabels;
+  const eventData = barData.eventData;
 
   const barChartData = {
     labels: eventLabels,
@@ -154,5 +129,54 @@ const EventTracking = () => {
     </div>
   );
 };
+
+function formatLineData(analytics) {
+  // Step 1: Prepare data for line chart
+  const formattedEvents = {};
+
+  // Format data by event name and timestamp
+  analytics.forEach(({ eventName, timestamp }) => {
+    const time = new Date(timestamp).toLocaleTimeString();
+
+    if (!formattedEvents[time]) {
+      formattedEvents[time] = { page_load: 0, button_click: 0 };
+    }
+
+    formattedEvents[time][eventName]++;
+  });
+
+  // Step 2: Prepare labels (timestamps) and datasets for Chart.js
+  const labels = Object.keys(formattedEvents);
+  const pageLoadData = labels.map((label) => formattedEvents[label].page_load);
+  const buttonClickData = labels.map(
+    (label) => formattedEvents[label].button_click
+  );
+
+  return {
+    labels,
+    data: {
+      pageLoadData,
+      buttonClickData,
+    },
+  };
+}
+
+function formatBarData(analytics) {
+  // Prepare data for the Bar Chart
+  const eventCounts = {};
+
+  analytics.forEach((event) => {
+    const eventName = event.eventName;
+    eventCounts[eventName] = (eventCounts[eventName] || 0) + 1;
+  });
+
+  const eventLabels = Object.keys(eventCounts);
+  const eventData = Object.values(eventCounts);
+
+  return {
+    eventLabels,
+    eventData,
+  };
+}
 
 export default EventTracking;
