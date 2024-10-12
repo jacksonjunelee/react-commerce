@@ -24,29 +24,75 @@ const EventTracking = () => {
     setIsCartOpen(!isCartOpen);
   };
 
+  // Step 1: Prepare data for line chart
+  const formattedEvents = {};
+
+  // Format data by event name and timestamp
+  analytics.forEach(({ eventName, timestamp }) => {
+    const time = new Date(timestamp).toLocaleTimeString();
+
+    if (!formattedEvents[time]) {
+      formattedEvents[time] = { page_load: 0, button_click: 0 };
+    }
+
+    formattedEvents[time][eventName]++;
+  });
+
+  // Step 2: Prepare labels (timestamps) and datasets for Chart.js
+  const labels = Object.keys(formattedEvents);
+  const pageLoadData = labels.map((label) => formattedEvents[label].page_load);
+  const buttonClickData = labels.map(
+    (label) => formattedEvents[label].button_click
+  );
+
   // Prepare data for the Line Chart
   const lineChartData = {
-    labels: analytics.map((event) =>
-      new Date(event.timestamp).toLocaleDateString()
-    ),
+    labels,
+    // labels: analytics.map((event) =>
+    //   new Date(event.timestamp).toLocaleDateString()
+    // ),
     datasets: [
       {
-        label: "Events Over Time",
-        data: analytics.map((event) => event.data.someValue), // Replace 'someValue' with the actual property to visualize
+        label: "Page Load",
+        data: pageLoadData,
+        borderColor: "blue",
         fill: false,
-        backgroundColor: "rgba(75,192,192,0.4)",
-        borderColor: "rgba(75,192,192,1)",
+      },
+      {
+        label: "Button Click",
+        data: buttonClickData,
+        borderColor: "green",
+        fill: false,
       },
     ],
+    // datasets: [
+    //   {
+    //     label: "Events Over Time",
+    //     data: analytics.map((event) => event.data.someValue), // Replace 'someValue' with the actual property to visualize
+    //     fill: false,
+    //     backgroundColor: "rgba(75,192,192,0.4)",
+    //     borderColor: "rgba(75,192,192,1)",
+    //   },
+    // ],
   };
 
   // Prepare data for the Bar Chart
+  const eventCounts = {};
+
+  analytics.forEach((event) => {
+    const eventName = event.eventName;
+    eventCounts[eventName] = (eventCounts[eventName] || 0) + 1;
+  });
+
+  const eventLabels = Object.keys(eventCounts);
+  const eventData = Object.values(eventCounts);
+
   const barChartData = {
-    labels: analytics.map((event) => event.eventName),
+    labels: eventLabels,
     datasets: [
       {
         label: "Event Frequency",
-        data: analytics.map((event) => event.data.someCount), // Replace 'someCount' with the actual property to visualize
+        data: eventData,
         backgroundColor: "rgba(255,99,132,0.2)",
         borderColor: "rgba(255,99,132,1)",
         borderWidth: 1,
