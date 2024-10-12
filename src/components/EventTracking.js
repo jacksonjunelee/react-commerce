@@ -75,6 +75,19 @@ const EventTracking = () => {
     ],
   };
 
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Event Counts",
+      },
+    },
+  };
+
   return (
     <div>
       <div className="productContainer analytics-header">
@@ -113,15 +126,15 @@ const EventTracking = () => {
           </div>
 
           {/* Charts for visual representation */}
-          <div className="chart-container">
+          <div className="chart-container-events">
             <h2>Analysis</h2>
             <div className="chart-placeholder">
               <h3>Line Chart</h3>
-              <Line data={lineChartData} />
+              <Line data={lineChartData} options={options} />
             </div>
             <div className="chart-placeholder">
               <h3>Bar Chart</h3>
-              <Bar data={barChartData} />
+              <Bar data={barChartData} options={options} />
             </div>
           </div>
         </div>

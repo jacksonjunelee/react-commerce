@@ -455,6 +455,8 @@ footer {
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #f9f9f9;
+  width: 80%;
+  justify-self: flex-end;
 }
 
 .analytics-item {
@@ -468,7 +470,8 @@ footer {
   margin: 0.25rem;
 }
 
-.chart-container {
+.chart-container-events {
+  width: 80%;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 8px;
@@ -483,4 +486,7 @@ footer {
   justify-content: center;
   align-items: center;
   border-radius: 8px;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  align-items: flex-start;
 }
