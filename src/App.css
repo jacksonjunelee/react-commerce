@@ -490,3 +490,155 @@ footer {
   padding-bottom: 10px;
   align-items: flex-start;
 }
+
+/* Ad Creation */
+
+.ad-creation-container {
+}
+
+.ad-create-container {
+  display: flex;
+  gap: 20px; /* Space between columns */
+  max-width: 1200px; /* Max width for the container */
+  margin: 0 auto; /* Center the container */
+}
+
+/* Column styles */
+.column {
+  flex: 1; /* Make columns take equal width */
+  background-color: #ffffff; /* White background for forms */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 20px;
+}
+
+/* Headings */
+h2 {
+  text-align: center;
+  margin-bottom: 15px;
+  color: #007bff; /* Primary color for headings */
+}
+
+/* Form styles */
+.form-field {
+  margin-bottom: 15px; /* Space between form fields */
+}
+
+.ad-label {
+  display: block;
+  margin-bottom: 5px; /* Space between label and input */
+  font-weight: bold;
+}
+
+.ad-input[type="text"],
+.ad-textarea {
+  width: 100%; /* Full width inputs */
+  padding: 10px; /* Padding inside inputs */
+  border: 1px solid #ced4da; /* Light border */
+  border-radius: 4px; /* Rounded corners */
+  font-size: 16px;
+}
+
+.ad-textarea {
+  resize: vertical; /* Allow vertical resizing only */
+}
+
+.ad-button {
+  width: 100%; /* Full width button */
+  padding: 10px;
+  background-color: #007bff; /* Primary button color */
+  color: white;
+  border: none;
+  border-radius: 4px; /* Rounded corners */
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px; /* Space above button */
+}
+
+.ad-button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Ad Preview */
+.ad-preview {
+  background-color: #e9ecef; /* Light gray for ad preview background */
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  position: relative; /* For positioning background image */
+  height: 200px; /* Fixed height for preview */
+  overflow: hidden; /* Hide overflow */
+}
+
+.ad-display {
+  position: absolute; /* Overlay background image */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover; /* Cover the entire preview */
+  background-position: center;
+  border-radius: 8px; /* Rounded corners */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8); /* Text shadow for readability */
+}
+
+/* Saved Ads Section */
+.saved-ads {
+  margin-top: 30px; /* Space above saved ads */
+}
+
+.saved-ads h2 {
+  margin-bottom: 15px; /* Space below section title */
+  text-align: center; /* Center saved ads title */
+}
+
+.ads-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columns */
+  gap: 15px; /* Space between grid items */
+}
+
+.ad-card {
+  background-color: #ffffff; /* White background for ad cards */
+  border-radius: 8px; /* Rounded corners */
+  padding: 20px;
+  text-align: center; /* Center text in saved ads */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  position: relative;
+  overflow: hidden; /* Hide overflow */
+}
+
+.ad-card h3 {
+  margin: 10px 0; /* Space around the ad title */
+}
+
+.ad-card p {
+  margin-bottom: 10px; /* Space below the description */
+}
+
+.ad-card button {
+  background-color: #007bff; /* Button color */
+}
+
+.ad-card button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .ad-creation-container {
+    flex-direction: column; /* Stack columns on smaller screens */
+  }
+
+  .ads-grid {
+    grid-template-columns: repeat(
+      1,
+      1fr
+    ); /* Stack saved ads on smaller screens */
+  }
+}

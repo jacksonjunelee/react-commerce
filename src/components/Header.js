@@ -31,6 +31,7 @@ const Header = ({ cartItems, toggleCart, isCartOpen, pageAnalysis }) => {
         <Link to={`/cart`}>Cart</Link>
         <Link to={`/machine-learning`}>Machine Learning</Link>
         <Link to={`/event-tracking`}>Event Tracking</Link>
+        <Link to={`/ad-create`}>Ad Creation</Link>
       </nav>
 
       {/* Side pane for minicart */}

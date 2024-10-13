@@ -1,17 +1,18 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { Provider } from 'react-redux';
-import store from './state/store';
-import { createBrowserRouter } from 'react-router-dom';
-import { RouterProvider } from 'react-router-dom';
-import Checkout from './components/Checkout';
-import MachineLearning from './components/MachineLearning';
-import EventTracking from './components/EventTracking';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { Provider } from "react-redux";
+import store from "./state/store";
+import { createBrowserRouter } from "react-router-dom";
+import { RouterProvider } from "react-router-dom";
+import Checkout from "./components/Checkout";
+import MachineLearning from "./components/MachineLearning";
+import EventTracking from "./components/EventTracking";
+import AdCreate from "./components/AdCreate";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
 const router = createBrowserRouter([
   {
@@ -19,17 +20,21 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: '/cart',
-    element: <Checkout />
+    path: "/cart",
+    element: <Checkout />,
   },
   {
-    path: '/machine-learning',
-    element: <MachineLearning />
+    path: "/machine-learning",
+    element: <MachineLearning />,
   },
   {
-    path: '/event-tracking',
-    element: <EventTracking />
-  }
+    path: "/event-tracking",
+    element: <EventTracking />,
+  },
+  {
+    path: "/ad-create",
+    element: <AdCreate />,
+  },
 ]);
 
 root.render(
