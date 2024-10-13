@@ -54,6 +54,7 @@ const Minicart = ({ cartItems, onRemoveFromCart, hideText, hideButton }) => {
               <button
                 className="removeBtn"
                 data-name="remove_cart"
+                aria-label="Remove"
                 onClick={(e) => onRemoveFromCart(e, product)}
               >
                 <FaTimes />
