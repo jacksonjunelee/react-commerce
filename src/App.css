@@ -532,7 +532,7 @@ footer {
 
 .ad-creation-form input[type="text"],
 .ad-creation-form textarea {
-  width: 100%; /* Full width inputs */
+  width: 90%; /* Full width inputs */
   padding: 10px; /* Padding inside inputs */
   border: 1px solid #ced4da; /* Light border */
   border-radius: 4px; /* Rounded corners */
