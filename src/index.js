@@ -10,7 +10,7 @@ import { RouterProvider } from "react-router-dom";
 import Checkout from "./components/Checkout";
 import MachineLearning from "./components/MachineLearning";
 import EventTracking from "./components/EventTracking";
-import AdCreate from "./components/AdCreate";
+import AdCreator from "./components/AdCreator";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -32,8 +32,8 @@ const router = createBrowserRouter([
     element: <EventTracking />,
   },
   {
-    path: "/ad-create",
-    element: <AdCreate />,
+    path: "/ad-creator",
+    element: <AdCreator />,
   },
 ]);
 

@@ -3,7 +3,7 @@ import Analytics from "../utils/Analytics";
 import Header from "./Header";
 import { useSelector } from "react-redux";
 
-const AdCreate = () => {
+const AdCreator = () => {
   const [headline, setHeadline] = useState("");
   const [description, setDescription] = useState("");
   const [buttonText, setButtonText] = useState("");
@@ -34,14 +34,14 @@ const AdCreate = () => {
 
   return (
     <div>
-      <Analytics data={{ page: "ad-create" }} />
+      <Analytics data={{ page: "ad-creator" }} />
       <Header
         cartItems={cartItems}
         toggleCart={toggleCart}
         isCartOpen={isCartOpen}
       />
       <div className="ad-creation-container">
-        <div class="ad-create-container">
+        <div class="ad-creator-container">
           <div className="ad-creation-form ad-column">
             <h2>Create Your Ad</h2>
             <div className="form-field">
@@ -129,4 +129,4 @@ const AdCreate = () => {
   );
 };
 
-export default AdCreate;
+export default AdCreator;

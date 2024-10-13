@@ -492,11 +492,11 @@ footer {
 }
 
 /* Ad Creation */
-
 .ad-creation-container {
+  margin-top: 50px;
 }
 
-.ad-create-container {
+.ad-creator-container {
   display: flex;
   gap: 20px; /* Space between columns */
   max-width: 1200px; /* Max width for the container */
@@ -504,7 +504,7 @@ footer {
 }
 
 /* Column styles */
-.column {
+.ad-column {
   flex: 1; /* Make columns take equal width */
   background-color: #ffffff; /* White background for forms */
   border-radius: 8px; /* Rounded corners */
@@ -513,25 +513,25 @@ footer {
 }
 
 /* Headings */
-h2 {
+/* h2 {
   text-align: center;
   margin-bottom: 15px;
-  color: #007bff; /* Primary color for headings */
-}
+  color: #007bff; 
+} */
 
 /* Form styles */
-.form-field {
+.ad-creation-form .form-field {
   margin-bottom: 15px; /* Space between form fields */
 }
 
-.ad-label {
+.ad-creation-form label {
   display: block;
   margin-bottom: 5px; /* Space between label and input */
   font-weight: bold;
 }
 
-.ad-input[type="text"],
-.ad-textarea {
+.ad-creation-form input[type="text"],
+.ad-creation-form textarea {
   width: 100%; /* Full width inputs */
   padding: 10px; /* Padding inside inputs */
   border: 1px solid #ced4da; /* Light border */
@@ -539,11 +539,11 @@ h2 {
   font-size: 16px;
 }
 
-.ad-textarea {
+.ad-creation-form textarea {
   resize: vertical; /* Allow vertical resizing only */
 }
 
-.ad-button {
+.ad-creation-form button {
   width: 100%; /* Full width button */
   padding: 10px;
   background-color: #007bff; /* Primary button color */
@@ -555,7 +555,7 @@ h2 {
   margin-top: 10px; /* Space above button */
 }
 
-.ad-button:hover {
+.ad-creation-form button:hover {
   background-color: #0056b3; /* Darker shade on hover */
 }
 
