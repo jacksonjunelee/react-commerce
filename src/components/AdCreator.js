@@ -7,7 +7,9 @@ const AdCreator = () => {
   const [headline, setHeadline] = useState("");
   const [description, setDescription] = useState("");
   const [buttonText, setButtonText] = useState("");
-  const [backgroundImage, setBackgroundImage] = useState("");
+  const [backgroundImage, setBackgroundImage] = useState(
+    `${getImageDomain()}/bg-1.jpg`
+  );
   const [savedAds, setSavedAds] = useState([]);
   const cartItems = useSelector((state) => state.cart.cartItems);
   const toggleCart = () => {
@@ -24,6 +26,8 @@ const AdCreator = () => {
         backgroundImage,
       };
       setSavedAds([...savedAds, newAd]);
+
+      console.log("saved ads: ", savedAds);
       // Reset fields after saving
       setHeadline("");
       setDescription("");
@@ -31,6 +35,14 @@ const AdCreator = () => {
       setBackgroundImage("");
     }
   };
+
+  const backgroundImages = [
+    `${getImageDomain()}/bg-1.jpg`,
+    `${getImageDomain()}/bg-2.jpg`,
+    `${getImageDomain()}/bg-3.jpg`,
+    `${getImageDomain()}/bg-4.jpg`,
+    `${getImageDomain()}/bg-5.jpg`,
+  ];
 
   return (
     <div>
@@ -41,7 +53,7 @@ const AdCreator = () => {
         isCartOpen={isCartOpen}
       />
       <div className="ad-creation-container">
-        <div class="ad-creator-container">
+        <div className="ad-creator-container">
           <div className="ad-creation-form ad-column">
             <h2>Create Your Ad</h2>
             <div className="form-field">
@@ -71,13 +83,30 @@ const AdCreator = () => {
               />
             </div>
             <div className="form-field">
-              <label htmlFor="background-image">Background Image URL:</label>
-              <input
-                type="text"
-                id="background-image"
-                value={backgroundImage}
-                onChange={(e) => setBackgroundImage(e.target.value)}
-              />
+              <label>Choose Background:</label>
+              <div className="image-selector">
+                {backgroundImages.map((img, index) => (
+                  <button
+                    key={index}
+                    className={`image-option ${
+                      backgroundImage === img ? "selected" : ""
+                    }`}
+                    onClick={() => setBackgroundImage(img)}
+                    style={{
+                      backgroundImage: `url(${img})`,
+                      backgroundSize: "cover",
+                      width: "60px",
+                      height: "60px",
+                      border:
+                        backgroundImage === img ? "2px solid #FF5733" : "none",
+                      borderRadius: "8px",
+                      margin: "5px",
+                      outline: "none",
+                      cursor: "pointer",
+                    }}
+                  ></button>
+                ))}
+              </div>
             </div>
             <button onClick={handleSaveAd}>Save Ad</button>
           </div>
@@ -128,5 +157,12 @@ const AdCreator = () => {
     </div>
   );
 };
+
+function getImageDomain() {
+  let domain = "http://localhost:3000";
+  const isProduction = process.env.NODE_ENV === "production";
+  if (isProduction) domain = "https://react-commerce-steel.vercel.app";
+  return domain + "/images";
+}
 
 export default AdCreator;

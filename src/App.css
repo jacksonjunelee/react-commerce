@@ -546,7 +546,7 @@ footer {
 .ad-creation-form button {
   width: 100%; /* Full width button */
   padding: 10px;
-  background-color: #007bff; /* Primary button color */
+  background-color: #ff5733; /* Primary button color */
   color: white;
   border: none;
   border-radius: 4px; /* Rounded corners */
@@ -556,7 +556,7 @@ footer {
 }
 
 .ad-creation-form button:hover {
-  background-color: #0056b3; /* Darker shade on hover */
+  background-color: #ff5733; /* Darker shade on hover */
 }
 
 /* Ad Preview */
@@ -566,7 +566,6 @@ footer {
   border-radius: 8px;
   text-align: center;
   position: relative; /* For positioning background image */
-  height: 200px; /* Fixed height for preview */
   overflow: hidden; /* Hide overflow */
 }
 
@@ -585,6 +584,28 @@ footer {
   align-items: center; /* Center content horizontally */
   color: #fff;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8); /* Text shadow for readability */
+  border: 1px solid rgba(0, 0, 0);
+  min-height: 300px;
+}
+
+.ad-display h3 {
+  font-size: 24px;
+  margin: 0 0 10px;
+}
+
+.ad-display p {
+  font-size: 16px;
+  margin: 0 0 15px;
+}
+
+.ad-display button {
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 4px;
+  background-color: #ff5733;
+  color: #fff;
+  border: none;
+  cursor: pointer;
 }
 
 /* Saved Ads Section */
@@ -622,11 +643,11 @@ footer {
 }
 
 .ad-card button {
-  background-color: #007bff; /* Button color */
+  background-color: #ff5733; /* Button color */
 }
 
 .ad-card button:hover {
-  background-color: #0056b3; /* Darker shade on hover */
+  background-color: #ff5733; /* Darker shade on hover */
 }
 
 /* Responsive Styles */
