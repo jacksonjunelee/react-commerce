@@ -610,7 +610,7 @@ footer {
 
 /* Saved Ads Section */
 .saved-ads {
-  margin-top: 30px; /* Space above saved ads */
+  margin: 50px; /* Space above saved ads */
 }
 
 .saved-ads h2 {
@@ -622,6 +622,7 @@ footer {
   display: grid;
   grid-template-columns: repeat(3, 1fr); /* 3 columns */
   gap: 15px; /* Space between grid items */
+  place-items: center;
 }
 
 .ad-card {
@@ -632,6 +633,7 @@ footer {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
   position: relative;
   overflow: hidden; /* Hide overflow */
+  width: 50%;
 }
 
 .ad-card h3 {

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Analytics from "../utils/Analytics";
 import Header from "./Header";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { saveAd } from "../state/actions/adActions";
 
 const AdCreator = () => {
   const [headline, setHeadline] = useState("");
@@ -10,12 +11,14 @@ const AdCreator = () => {
   const [backgroundImage, setBackgroundImage] = useState(
     `${getImageDomain()}/bg-1.jpg`
   );
-  const [savedAds, setSavedAds] = useState([]);
+  const dispatch = useDispatch();
+  const savedAds = useSelector((state) => state.ad.savedAds);
   const cartItems = useSelector((state) => state.cart.cartItems);
+  const [isCartOpen, setIsCartOpen] = useState(false); // State to control the side pane visibility
+
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
   };
-  const [isCartOpen, setIsCartOpen] = useState(false); // State to control the side pane visibility
 
   const handleSaveAd = () => {
     if (headline && description && buttonText) {
@@ -25,9 +28,8 @@ const AdCreator = () => {
         buttonText,
         backgroundImage,
       };
-      setSavedAds([...savedAds, newAd]);
+      dispatch(saveAd(newAd)); // Dispatch action to save ad to Redux store
 
-      console.log("saved ads: ", savedAds);
       // Reset fields after saving
       setHeadline("");
       setDescription("");
@@ -57,7 +59,9 @@ const AdCreator = () => {
           <div className="ad-creation-form ad-column">
             <h2>Create Your Ad</h2>
             <div className="form-field">
-              <label htmlFor="headline">Headline:</label>
+              <label htmlFor="headline">
+                Headline:<span style={{ color: "red" }}> *</span>
+              </label>
               <input
                 type="text"
                 id="headline"
@@ -66,7 +70,9 @@ const AdCreator = () => {
               />
             </div>
             <div className="form-field">
-              <label htmlFor="description">Description:</label>
+              <label htmlFor="description">
+                Description:<span style={{ color: "red" }}> *</span>
+              </label>
               <textarea
                 id="description"
                 value={description}
@@ -74,7 +80,9 @@ const AdCreator = () => {
               />
             </div>
             <div className="form-field">
-              <label htmlFor="button-text">Button Text:</label>
+              <label htmlFor="button-text">
+                Button Text:<span style={{ color: "red" }}> *</span>
+              </label>
               <input
                 type="text"
                 id="button-text"
